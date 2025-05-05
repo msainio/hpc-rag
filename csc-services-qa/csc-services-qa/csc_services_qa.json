@@ -1,0 +1,1802 @@
+[
+    {
+        "idx": 0,
+        "question": "Is there a way to paste text into linux terminal using (Finnish) keyboard only. (i mean without using right click). I am using PUTTY.",
+        "answer": "In Putty (and MobaXterm) paste works with shift + insert.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 1,
+        "question": "What is the price for billing units in commersial projects?",
+        "answer": "The base package costs 1190 EUR (VAT 0 %). It includes: 20 000 BUs, 4 user accounts. Note that LUMI has a different (more affordable) pricing",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 2,
+        "question": "What is the \"Jupyter for Courses\" on Puhti for?",
+        "answer": "This is kind of a placeholder on Puhti web interface to customise your own notebooks.For example when you build a notebook with your own python environment, it is possible to render your notebook application module or environment through \"Jupyter for Course\".",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 3,
+        "question": "Would any kind of cluster be called a supercomputer or when is the point reached?",
+        "answer": "Many definitions given by our specialists :) Traditionally maybe smaller clusters in universities are/were called clusters, and bigger clusters in supercomputing centers were called supercomputers. Another characteristic to a supercomputer could be the queueing system, or the way the nodes are inter.connected.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 4,
+        "question": "Which disk area shall I use if I'm reading and writing a lot of huge files (like several 5-10 GB fil)?Would $LOCAL_SCRATCH bring a performance boost?",
+        "answer": "scratch is the correct one.\nYou can try local_scratch. It may be faster, depending on what is the bottleneck of your work.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 5,
+        "question": "What means \"  Where:\n S:  Module is Sticky, requires --force to unload or purge\" after csc-tools module?",
+        "answer": "Modules marked as \"Sticky\" are not removed with command `module purge`. To remove them you have to use command `module --force purge` This is to protect essential modules from accidental removal.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 6,
+        "question": "In Puhti and Mahti, is it faster to get/send data from/to allas than from other servers, e.g. an university server?",
+        "answer": "This depends on many factors. Some of the factors that affect the rate of file transfer is nature of files (lot of small files or few big files), speed of your university network and client (winscp/a-tools/rsync) you are using. The transfer of data within csc environment (Puhti, Mahti and Allas) is usually very fast.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 7,
+        "question": "Is there some convenient way (like md5sum) to ensure that the files are not corrupted while moving them, for example, between Puhti and Allas?",
+        "answer": "Not in a convenient way. You can store the checksum value in a file using 'md5sum' command on Puhti or Mahti before storing data to allas. Once you retrieve the data later, you can then check the checksum value again to see if you have preserved integrity of files.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 8,
+        "question": "When I use a-put to upload the  files to Allas, if it fails due to storage limit or time limit, will it create fragments and how to detect and remove them?",
+        "answer": "a-put will try to check the availability of required space on Allas for your object before uploading. In case uploading fails for some reason, a-put command also deletes the partially uploaded files. Alternatively, you can also double check the same with a-list command (a-list bucket_name/beginning_of_the_object).",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 9,
+        "question": "What are the ameta files created in Allas?",
+        "answer": "It is a metadata file decscring the bucket. Files with  _ameta extension are automatically created when you upload files with 'a-put' command. These are analogous to the metadata files created by other swift/rclone tools",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 10,
+        "question": "In an Allas tutorial it's said that \"a-flip is meant for files that need to be published only temporarily, for example for a one-time share\". Are the files shared with this command automatically removed or became private after some time?",
+        "answer": "Yes, files uploaded with a-flip will be deleted once they are older than two days (the age will be checked when you run a-flip again).",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 11,
+        "question": "For the file name, should it must be without space?",
+        "answer": "This is highly recommended practice (not necessary though). Spaces in filenames can create problems when running Linux commands if not escaped properly.\nIf we have for example file \"my file.txt\" and try to look at the content with cat command `cat my file.txt` cat will actually think there are two files: \"my\" and \"file.txt\". So we have to use quotes `cat \"my file.txt\"` or escape `cat my\\ file.txt`. There will be similar problems if file names contain characters that are used as part of commands (e.g. various brackets). While they can be handled with escape and quotes it can get a bit messy and spaces and reserved characters are best avoided in file names.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 12,
+        "question": "If I need to use a fast local disk ($local_scratch) - what is the conventional way to point it to the program? Do the programs provide own parameters for this purpose (like --tmp)?",
+        "answer": "The programs don't provide own parameters (like --tmp)to refer to local scratch by default but you can point to $LOCAL_SCRATCH as a temporary directory when needed. One conventional option is to actually go to the local scratch directory on compute node and perform all your data analysis in that folder as shown roughly below:\n```\n- cd $LOCAL_SCRATCH (and also copy your data to the scratch folder and perform all preprocessing on data if needed there)\n- your program command (and refer the data in local scratch folder as input to your programme and direct all results to the local scratch area)\n- mv results_folder /scratch/<project>/$USER/  # remember to copy your results to scratch area\n```\nall of the steps have to be described  either in batch script or as part of interactive jobs",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 13,
+        "question": "What is a Docker container image?",
+        "answer": "Docker is one of the popular container platforms. And the  docker image is a read-only template (or actually a layered file system in case of docker) that contains everything (=all runtime environment) for creating a container. In a way, you can think of container image as a standalone (executable) file to run your application.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 14,
+        "question": "After installing the metabat program with tykky, should I always add the bin directory to the $PATH before starting to work with program again?",
+        "answer": "Yes. You are right - one should to add 'bin' directory path to $PATH variable before calling metabat program\nWith Tykky installed software it is highly recommended to only add them to PATH when actually using them. The installation directories often contain common things like Python. Having those in your PATH can cause conflicts with other software.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 15,
+        "question": "Should I see from the documentation if the program can use more than one core? Is there some examples?",
+        "answer": "Usually, yes. You can check the different flags (cores/threads) for your programme in that programmes documentation. But sometimes, it may not be obvious from documentation. You need to become familiar with the code you are using so that you know how it is best used; serial or parallel.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 16,
+        "question": "As the conda environments are containerized with tykky, is it enough to just delete the container when not needed anymore?",
+        "answer": "Yes. You can just delete the whole installation folder.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 17,
+        "question": "Is it possible to have sudo rights inside a container?",
+        "answer": "Only if you have sudo rights in the host. When run with user rights, you only have user rights in the container.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 18,
+        "question": "Is it correct that single tasks can be split to at most 20 CPUs on Puhti only, or is there any option to spool up more CPUs for a single task? I would imagine that this is not possible since the 2x20 CPUs on a single node are not sharing the same chache, right?",
+        "answer": "Each Puhti node has 40 physical cores (2 CPUs with 20 cores each), so you can launch at most 40 threads from a single task.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 19,
+        "question": "What are the differences between /scratch and $LOCAL_SCRATCH",
+        "answer": "Some differences:\nTechnical: /scratch is on Lustre parallal file system. $LOCAL_SCRATCH is on a physical NVMe solid state disk installed in the node\nSpeed: /scratch is slower and performance can suffer especially if accessing many small files. $LOCAL_SCRATCH is fast and can speed up jobs that rely heavi on disk I/O.\nVisibility: /scratch is visible from all nodes. $LOCAL_CRATCH is specfic to a single node.\nPermanence: Project /scratch directory will exist for the life time of the project. Files wil exist 180 days (if unused). $LOCAL_SCRATCH allocation is specific to a job. After the job finishes, the allocation and files will be deleted. Remember to copy all necessary files to /scratch as part of the job.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 20,
+        "question": "After containerizing a Conda environment with Tykky, is the correct way to use it just to add the bin to the path and start to use different tools?",
+        "answer": "Yes! These \"binaries\" for the different tools are actually wrapper scripts that do quite a bit of things automatically for you and finally call the actual binaries within the containers. Nothing else needs to be done.",
+        "source": "csc-enveff-20230412"
+    },
+    {
+        "idx": 21,
+        "question": "Am I right with the assumption about BU: if I apply for too much memory, the set memory gets billed? But with runtime/CPU usage just the used one gets billed?",
+        "answer": "Yes. This is correct. You can think of it this way: what has been allocated for you, i.e. what is not available for others, is billed. The memory is allocated for you _for the duration of the job_ and not available for others and is billed. If the job ends before the time you specified in the batch script, the resources are freed and they are again available for others --> not billed.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 22,
+        "question": "Does using SSH for Puhti mean you can access files directly from your own computer or do you still need to store the data you want to use in Allas/csc services?",
+        "answer": "SSH for Puhti means \"just\" a terminal connection. You'll get the command line and you can access files etc. The File browser is separate.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 23,
+        "question": "If I use SHH from my work laptop, so I'm accesing Puhti through terminal, am I then able to for example do DNA sequence aligment on FASTQ files on my local disk or do these files need to be stored in CSC for me to be able process them with Puhti?",
+        "answer": "Yes, you need to copy the files to CSC to be able to use the Puhti software and computing capacity.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 24,
+        "question": "If I want to install a tiny software (e.g., home-made script or .exe), what should I do?",
+        "answer": "This depends a lot. If it is just e.g. a Python script, you can copy it to the supercomputer and try to run it using some of the Python modules available (or install a Python environment of your own). With .exe file (executables/binaries), it should support Linux operating system. If this is the case and the application is just a serial (or threaded) application, you can try to run it directly. Otherwise you should probably recompile the application to ensure that it performs well.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 25,
+        "question": "What should I exepct to see after enabling the Remote graphics option -X when connecting with ssh? (I am using Xterminal on windows)",
+        "answer": "`-X` option will enable to forward graphics from the supercomputer to your local display. So you should not expect to see anything after ssh, but if you try opening e.g. a picture with `eog` it should work. If not using the `-X` option you would get an error like `cannot open display`",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 26,
+        "question": "What is the best approach to keep track of the directories & objects stored in Allas and Puhti? I have experience backing up files in Allas before scratch purge, but it is quite complicated to keep track which file is backed up and which is not. What I am doing is to delete the entire directory which I have backed up in Allas and download the same object back to refresh the 180 days timer (mainly to keep the dependent path viable).",
+        "answer": "There are many ways to organize your files and to keep track of what is / should be backed up and what is disposable, and you might need to do some experimenting and soul-searching to find the solution that works the best for you, but some options could be e.g.\n1. Mentally define some specific directories (say, `data`, `plots`, `scripts` and whatnot) as important, regularly back those up and commit to making sure that no important data is stored outside those directories\n2. Back up \"everything\" (e.g. your home directory and the project's scratch directory) but exclude some specific directories (like `tmp` or `testing` or `wip`) that you use for storing temporary files\n3. The first option, but all the important directories are contained within one directory for easy backing up (so you have one directory, e.g. `backed_up`, that contains `data`, `plots` etc)",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 27,
+        "question": "how do you see the disk usage in ALLAS",
+        "answer": "One easiest way to find ALLAS disk usage is to check on our pouta web page (HORIZON interface). First, login at www.pouta.csc.fi with your CSC account and then select a project under which you have uploaded some files to allas before. On the left hand side panel, select 'Object store' and  then 'Container' tab. You can then see different objects (within containers) you have created. If you click an object, you can then see the disk space used by the object.\n*a-info* command on Puhti/Mahti gives you a overview of disk space used for data objects in different buckets. Unfortunately, there is no way to check the amount of diskspace left in your ALLAS quota",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 28,
+        "question": "my permission was denied when trying to copy files to Mahti. I tried using my csc password, what could be wrong?",
+        "answer": "Mahti service might not have been activated for the project you are using. You can check in MyCSC web portal.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 29,
+        "question": "How do I estimate time and resources that I will use when using the billing calculator? Is it a matter of experience to know how much different jobs will take or are there examples somewhere?",
+        "answer": "Time and resources are very much depend on your job. So your experience with your job can only help you. If you have jobs that take quite long time and heavy resources, you can start with small datasets and then extrapolate the resources accordingly to bigger datasets.  BUs are also computed for data storage. You can use BU calculator to get some estimates for storing data.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 30,
+        "question": "If I have never run a job in Puhti, or in general, before, how can I estimate GPU/time etc?",
+        "answer": "That is challenging to get any realistic estimates without actually running your job.\nAs the first estimate, you could use the same time it takes for your calculation on your own computer (or whatever you are using now). The benefit of HPC is, that you can throw more resources at the same problem - either as a truly parallel job (openMP, MPI) or running many at the same time (farming). In practice, you'll learn to make better estimates with experience and if you didn't apply enough initially, you can always apply more later.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 31,
+        "question": "How do I actually use the billing unit calculator? How do I account for GPUs? And the billing unit calculator does not seem to combine memory and task/CPU calculation?",
+        "answer": "In the BU calculator you can add multiple jobs into a single estimate. The calculator is also a way to look at the relative BU cost of different resources. i.e. How significant is the CPU or Memory based billing unit cost, _if_ the job is using GPUs? Note also, that with BUs we try to encourage researchers to use the resources efficiently: reserve what you need but not more.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 32,
+        "question": "Where should conda package containers be installed if we would like everyone on a project to be able to use them?",
+        "answer": "In */projappl/<project>/*  directory.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 33,
+        "question": "I have created several buckets in Allas that each contain many files. Is it possible to compress these into a single .zip within Allas? Or what would be the best way to do this?",
+        "answer": "ALLAS objects are immutable  and can't be modified within ALLAS.  You have to bring the data out of ALLAS, zip it outside and upload it again. Some tools like a-put can archive (using tar) before uploading. a-put command also has compression option with ```-c```flag.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 34,
+        "question": "For the first running of the task, how to approximate how much resources needed?",
+        "answer": "Feel free to test with small resources just to see how far you can succeed with your job. It is a good idea to understand your programme/software/tool before using it. You can for example check if your program supports multiple threads/cores, needs huge/low memory or supports GPUs or not etc. These resource requirement also changes based on the amount of input data. Sometimes you have to tune your resources based on wall-clock time permissible on the partition you are using in supercomputing environment. Yes. this is a bit of exploration process in the beginning especially if you are handling complex software",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 35,
+        "question": "Just out of curiosity, how is the billing unit calculated in relation to the actual cost of the resources used?",
+        "answer": "You can check the actual costs in relation to BUs in my.csc. Please note that BUs are just CSC's way of finding how much resources are being used and these resources are free-of-charge for open science research.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 36,
+        "question": "Can I individually allocate the RAM for each core of the job?",
+        "answer": "In SBATCH directives of your batch script you can use ```--mem-per-cpu= ```flag.  Try ```sbatch --help ```for more help.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 37,
+        "question": "How do I know if I have to use collated parallel IO method or when running the simulation \"normally\" is sufficient? The software I use is openfoam.",
+        "answer": "Collated method should be used specially when number of your output/results files is large. If your mesh is large, which normally implies lot or sub domains, lot of time (or iteration) steps, and all data, including lot variables, is written on disk, then, handling writing in those numerous output files become hard for Lustre file system, which is used on CSC's servers. It is good question of where is the limit when collated method should be used. if the number of sub domains (= processes) with non-collated method become larger than 120, I would use collated method - I don't see reason why not.",
+        "source": "csc-enveff-20230919"
+    },
+    {
+        "idx": 38,
+        "question": "After I run a  job on Puhti and the job closes, my home directory is filled with temp files created during the job (not a part of the input/output). Can I delete these?",
+        "answer": "If you do not need them (they do not contain important info), then yes it's a good idea to delete them. The Home quota is also quite small, so if there's a lot of temp files being written might make sense to tell the program to write them to the local disk (`$LOCAL_SCRATCH`) instead. Writing a lot (thousands) of small files to the shared file system (e.g. home or scratch) might also worsen performance significantly, so using the local disk is recommended if dealing with large amounts of temporary files.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 39,
+        "question": "Could you explain please, there is this limitation \"do not read plenty of small files\", but it supposed to be ok to read multiple from @LOCAL_SCRATCH. So if the script is running from let's say projappl, but the folder with the files is in local_scratch, is it ok to read them iteratively? Am I missing smth? Thanks!",
+        "answer": "Yes. Main idea is that when your application (which can be installed on /ProJappl but can be called from anywhere) requires reading (or writing) thousands of small files, LOCAL_SCRATCH (=local SSD drive which are designed for faster reading and writing of files) is very efficient (= you can get improved wall-clock time). On lustre parallel file system (e.g., on /scratch/..), it would take more time for the same job and also causes a bit of overhead on file system.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 40,
+        "question": "In a Slurm bash script example, srun was placed before each command (e.g. srun hostname; srun sleep 60). Is it needed?",
+        "answer": "It is used to tell the command to actually use the resources that were requested. This is important if you request e.g. multiple compute cores to use. If forgotten, the job would just run using a single core and the other requested resources would idle and thus be wasted.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 41,
+        "question": "What's the difference between srun and sbatch?",
+        "answer": "Sbatch is used to submit a batch job script. Srun is used to submit job directly. Anything in the #SBATCH lines in a batch job script can be given as command line arguments for srun. Srun can be handy for submitting simple jobs, but for more complex jobs, writing a batch job script is probably clearer. Batch job scripts also give you a record of what you did, so they can make troubleshooting easier.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 42,
+        "question": "Can I run something like sacct from jupyter or in interactive mode when there is no batch job submitted? How to know how much billing units I consume or if the requested resourses are optimal?",
+        "answer": "`sacct` and `seff` can be used for any job ids irrespective of whether they have already completed or are still running. Note that the results might however be accurate only after the job has finished. Shell commands like sacct and seff can in principle be used in jupyter by adding an exclamation point before the command, e.g. `!sacct -j 1234567`. Seff will print the consumed billing units and to know if the requested resources were used optimally, check the CPU (or GPU efficiency) as well as the memory efficiency. These should ideally be close to 100%, although such a high efficiency is typically not possible. Just make sure that the efficiency is not too low. On mahti 50% CPU efficiency is also very good, since the calculation takes into account multithreading.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 43,
+        "question": "Could you re-iterate the prices/quotas for Allas storage for academic use? Thanks",
+        "answer": "Default quotas for free academic use: Storage\t10 TiB, Buckets per project\t1 000, Objects per bucket\t500 000\nIf you are using CSC's services free-of-charge and need to store more than 200 TiB in Allas, please contact servicedesk@csc.fi in order to agree with CSC about storage terms and possible costs.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 44,
+        "question": "When I pushed a new text file from puhti to allas with a-put, it automatically added extension .tar. Is this the way it should work?",
+        "answer": "No. The tar extension should be added only if you add a directory to Allas with a-put.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 45,
+        "question": "Is there any advantage of using rclone over a-commands, or the other way around?",
+        "answer": "rclone is typically faster as it does not do the checks and pre-prosessing that a-put/a-get does.\na-put/a-get provide you easier syntax and some automatized checks and pre/prot-prosessing steps. Also in the case of batch jobs a-commands allow you to automtaically re-generate the Allas token ( if the original Allas connection in opended with allas-conf -k).",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 46,
+        "question": "How to know if I am requesting correct amount of resources for an interactive desktop session? I did not see those sessions with sacct even though I have run them.",
+        "answer": "sacct shows by default only jobs that were run on that day. To query for older jobs, use the `-S` flag (for Start), e.g. `sacct -u $USER -S2023-11-01` to see all your jobs that started after 1st Nov 2023. Remember to not query too long time intervals since the command is a quite heavy database operation.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 47,
+        "question": "What is the command to make a data already available in allas (but not in puhti) public, can it be done?",
+        "answer": "`a-publish` will make the file public. If you just want to share a file temporarily, you can also use `a-flip` (the file will become unavailable after a while).\nnote that access rights are controlled on bucket level: you can either publish all the objets in a bucket or none of them.\nyou can use https://pouta.csc.fi interface or `a-publish -b bucket-name` to make a bucket public.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 48,
+        "question": "Is it possible to request software to be added to the modules maintained by CSC? Or have some software installed by CSC personnel to own projappl directory? These installations are quite difficult without Linux or coding knowledge.",
+        "answer": "You can always ask. We will assess the situation case by case and decide wheher to add the software to our selection or not. Even if we choose not to make a public installation, we can provide you with detailed instructions on how to install it yourself. We can't install it in your /projappl for you, since we specialists do not have read or write access to your directories. (This is also good to keep in mind when writing a help request to servicedesk: You need to include or somehow share the files you want us to take a look at. We can't simply check them from your /scratch etc.)",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 49,
+        "question": "I use snakemake pipelines in a lot of my work, and see it is available preinstalled. What would be the best approach for using it efficiently on Puhti? Can one use Snakemake's `--slurm --default-resources slurm_account=<project name?> slurm_partition=<partition>` parameters to launch the pipeline and have it submit the individual jobs to Slurm? Do you happen to have some example launch script available?",
+        "answer": "One can use natively implemented slurm executor for your Snakemake pipeline. However, if you have lot of small job steps (or sub tasks) in your workflow, we advice submitting your job as a normal batch job with proper resoiurces  and use *local*   execution instead.  This means, all of your the sub tasks will be run inside of the same resource allocation. If you have too many small jobs (say several hundreds or even thousands), our suggestion in your case is to use HyperQueue executor (instead of slurm) where workers submit all of your sub-jobs to the same resource allocation (= everything happens in one batch job). For this, you should use the `--cluster` option and e.g. HyperQueue",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 50,
+        "question": "I want to train and retrain models on Puhti, and track metrics with MLflow which is running in Rahti. For this I need to be able to change env variables. Is it possible to create conda environments or what would be the go-to solution?",
+        "answer": "If you mean that you need to set environment variables for the runs in Puhti, you can do that with the command `export VARIABLE=value` where \"VARIABLE\" is the name of the variable to set and \"value\" the value you want to set it to. This command can be given in the Slurm batch job script or in the terminal before launching the job.\nConda shouldn't be needed for this, unless you need to install some packages from the conda repositories. MLflow should be included in our PyTorch module, and can also easily be installed by yourself with `pip install`.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 51,
+        "question": "Kubernetes is often mentioned together with Docker; what is this? Is it used for academy-oriented DS projects? Thanks!",
+        "answer": "Kubernetes is container orchestration system that can be used e.g. to automate starting/stopping containers. It's typically used in a setting where you provide services as containers.CSC uses similar but bit different framework called, OpenShift (which is a paid platform service from Red Hat UNLIKE Kubernetes (aka, k8s) is an open-source application from Google) in Rahti container cloud",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 52,
+        "question": "Is it possible to use Tykky tool to put different conda installations into the same container?",
+        "answer": "In theory, yes. But in practice, if you have two complex conda environments, each with conflicting python packages, tykky installation would more likely either fail or one of the environments may not work as intended.",
+        "source": "csc-enveff-20231128"
+    },
+    {
+        "idx": 53,
+        "question": "How to add a remote repository for git? I would like to use git for the scripts I write on the CSC servers and push/pull them from a remote repo",
+        "answer": "You can use git the same way you would use it in your own computing environment (from the command line). So for adding a remote repository, you can either create a repository on your favorite platform, eg GitHub and then clone it via ssh to Puhti, or other computing environment. OR you can initialize the repository on Puhti and then push it to a new remote repository.\nFor setting up ssh keys you can use the command `ssh-keygen` on Puhti login node shell and store them to your users home directory.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 54,
+        "question": "Is there a nice way to automatically record the software versions you used when loading a module in your pipeline? (similar to a conda environment lock file)",
+        "answer": "Not really in that sense. But all our modules come with specific versions. It is a good idea to load each module along with specific version in your batch script. If you don't mention a version, it is the latest stable version.\nIf you include all \"module load\" commands in uour batch job script the load messages get saved in the SLURM out file. You could also include \"module list\" command. AS mentioned above it is always good idea to load modules with version number as the default version will change over time.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 55,
+        "question": "How to know which open source/online software I am allowed to download/install/compile/run on CSC super computers (Puhti mainly)? I need several software packages which are from the Github account of a known collaborator.",
+        "answer": "When CSC installs a software tool in supercomputing environment we look for licence file which gives information on whether we can install for free on CSC systems. If they are opensource/free you are free to install as needed. You can browse licenses in our software stack in CSC documentation",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 56,
+        "question": "Does developing codes in the server consume billing units?",
+        "answer": "Whenever you use the computing resources, billing units are consumed. However, if you do not have high resource needs, the amount of billing units used is very minimal.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 57,
+        "question": "Is the Visual Studio Code in the Puhti/Mahti web interface compatible with GitHub Copilot? How about Pouta?",
+        "answer": "It is not available by default, but there are open source copilot-like plugins you can try. Pouta is a cloud service where you can manage your own virtual machine, i.e. you have to set up everything yourself. So in principle it is compatible yes.\nThe official one should be possible to use, just has to be manually installed using the \"Install from vsix\" option in the extensions tab (in the three dots menu there) after downloading the extension from the Visual Studio Marketplace.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 58,
+        "question": "Can I use a singularity container in Puhti?",
+        "answer": "Yes. Singularity is now called Apptainer.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 59,
+        "question": "How do we know what resourses an application needs? Or what resources will be needed to run a certain analysis?",
+        "answer": "Bit difficult to suggest on a general level. Good starting point is to check application documentation where you may find whether the application is memory intensive, parallelisable or has specific resource needs.  Once you get some idea about the software you can start with small data and perform some pilot experiments with minimal resources. You can then scale up the resources and data as needed. Only experience will help us here. Obviously, you can always ask the developer of the tool to know more information instantly.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 60,
+        "question": "Can you please explain about GPU NVIDIA processor in Puhti or Lumi?",
+        "answer": "Puhti and Mahti have GPU NVIDIA processors while LUMI has AMD GPU processors.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 61,
+        "question": "I'm sorry if I missed it, but what is the main difference between projappl and scratch directories except for the automatic cleaning in scratch? Where is it better to store files that we want to share with other project members?",
+        "answer": "Both projappl and scratch are shared with all project members, we suggest to keep all working files in **scratch** and use projappl only for files related to installations, configuration files etc. I.e. files that are necessary for a longer period of time. Inactive research data should be stored in Allas.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 62,
+        "question": "How can you check your disk workload? Like how do you know if you need to use/switch to these fast local disks?",
+        "answer": "Good question. It might not be easy, but if you know that your application will be reading/writing thousands of files or in general just doing a lot of I/O then that's at least much more efficient on fast local disk. So you need to know the details of your workflow.\nIt's difficult to see directly, but you could check resource usage with \"seff\" command. Low CPU efficiency can be an indication that time is spent waiting for the disk, not computing. If you have low CPU efficency try same analysis with local disk and compare performance.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 63,
+        "question": "Can only the project manager/owner apply for more disk resources into an existing workspace?",
+        "answer": "Yes, only the project manager can apply for a disk quota change.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 64,
+        "question": "One question about the cleaning of storage in putti every six months, will all the files in /scratch and /projappl be erased? Since the /projappl is a sharing directory.  Thanks!",
+        "answer": "Files that have not been used in six months will only be deleted from /scratch. Files in your $HOME directory or /projappl will not be removed. Each time the cleaning happens, we will notify by email in advance and give instructions how you can check which files will be removed so that you can move them to e.g. Allas.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 65,
+        "question": "Is the SSH required? I could not get that to work, but I understood that Puhti and Mahti can be used from the web interface and then the SSH is not required? I use windows computer and tried to create SSH with Putty",
+        "answer": "Yes, if you use the web interface, then you do not need to set up SSH keys since you will be authenticating by logging in using CSC account (or Haka/Virtu).",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 66,
+        "question": "Can you clarify is 180d per file or any activity in folder? i.e. If only one file is accessed in the folder, does it \"protect\" other files from deletion?",
+        "answer": "The cleaning is done by file, so such protection will not work ;-).",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 67,
+        "question": "When we use the export SCRATCH= and export PROJAPPL= commands, where do these paths get exported to?",
+        "answer": "They get stored into these variables. I.e. `export SCRATCH=/scratch/project_2001234` would mean that you can use `$SCRATCH` whenever you want to refer to the path `/scratch/project_2001234`. E.g. `cd $SCRATCH` would make you move into this scratch directory. Note the `$` sign, which is used in Linux shell to denote a variable.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 68,
+        "question": "Does export only work with SCRATCH and PROJAPPL or can we use it for exporting any path? And if yes, can we give it any name, e.g export STRUCTURE=/scratch/project_2001243/structure",
+        "answer": "Yes this would also work. Just be careful to not overwrite any important variables, e.g. PATH or PYTHONPATH, you can check if a variable already exist with `echo $VARIABLENAME` which either prints the variable name or nothing if it does not exist",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 69,
+        "question": "When a tutorial has $USER, do we need to type it as it is, or should we type our actual username? When I tried creating a new directory using $USER it created an empty file with my user name instead of a new folder.",
+        "answer": "`$USER` is actually an environment variable which stores your CSC username as its value on Puhti. So it is a convenient shorthand to use if you don't want to type your username. It is different for each user (as each user has their own username). So to answer the question, type it as is. content inside  brackets (e.g. `<project>`) should be replaced somehow (e.g. by your actual project id).",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 70,
+        "question": "I see in MyCSC that the project file allocation is almost full, at 99%. What should I do?",
+        "answer": "You should figure out where you have a lot of data. Then, when you know this, delete the unnecessary files and move those that you still need somewhere else, e.g. Allas.\nIt is of course also possible to apply for more quota, but the best option is always to first consider if all those files are really needed.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 71,
+        "question": "Sending jobs to the cluster via snakemake - is not really advised without calling snakemake by a batch script, even if you allocate appropriate amount of cores etc. Can you try to explain why this is?",
+        "answer": "Snakemake can generate a large number of very short batch jobs and this puts load on the batch job system. In worst case scenario every step (e.g. checking if a file exist) is run as a separate batch job. So you should reserve some resources and let Snakemake do its thing within that reservation, but don't let Snakemake talk to the batch job system directly.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 72,
+        "question": "What do you do with batch jobs when you don't know how long your job might take? For example with #SBATCH --time=00:02:00 ?",
+        "answer": "You can test beforehand in an interactive job for example. Run a minimal example and try to extrapolate based on the runtime.\nOverestimating time is not as bad as overestimating other resources. The job will end when the last process of the job ends and all reservations are freed.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 73,
+        "question": "Why is the number of cores per node called \"--ntasks\" instead of \"--cores\", like \"--nodes\"? Or is \"--ntasks\" something different that simply the number of cores per node?",
+        "answer": "A single task may use multiple cores. The number of cores one task uses is specified using `--cpus-per-task` option. So it's a bit different. You could for example use --ntasks=40 and --cpus-per-task=1 to use all cores in one Puhti node. Or you could also do --ntasks=2 and --cpus-per-task=20, or --ntasks=1 and --cpus-per-task=40. In all cases here you're using all cores, but the details of the parallelization will be different (tasks are related to MPI ranks while cpus-per-task are actually the number threads that each MPI rank launch, but this is already a bit more advanced topic).",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 74,
+        "question": "When is Putty recommended to use? Is it the same as MobaXterm?",
+        "answer": "It is a matter of preference mostly. MobaXterm has much more features and can thus be more useful. PuTTY is a quite simple client that more or less just allows you to do SSH (i.e. no file transfer functionality e.g.).",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 75,
+        "question": "Is it better to overestimate time rather than the number of cores? The resources will be free anyways after the job is finished, altough time allocation is not?",
+        "answer": "Neither is optimal, but in this case it would be better to overestimate time, because you are only billed for the time you actually use and after your job ends the resources are freed for others to use. Cores that are reserved but not used are away from others and wasted if you do not utilize them efficiently. The main downside of requesting too much time is that you might queue for the resources for longer.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 76,
+        "question": "What threshold is considered too inefficient for CPU useage (in terms of percentage) ?",
+        "answer": "The rule of thumb is that your job should get *at least* 1.5 times faster when you double the amount of resources. So as a percentage, the parallel (CPU) efficiency should be at least 75%",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 77,
+        "question": "Does seff display some mean memory usage for a job? Sometimes seff shows that a job has not used all of the reserved memory (e.g. seff shows memory usage of approximately 40%) but still the job fails while running with an out of memory error and increasing the allocated memory for the job seems to fix this, even though seff showed that not all of the allocated memory were used in the first place. Could this be due to memory demand spiking highly in the course of running the job, even though most of the time not using all of the allocated memory?",
+        "answer": "Seff is not 100% accurate and can miss shortlived memory spikes, unfortunately. Seff tries to give you the maximum memory usage (i.e. the memory that your job actually needs/used), but it can fail. Mean memory estimate would not be that useful because the needs are defined by the maximum.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 78,
+        "question": "Is there a way to restore my home directory to its state at the time my account was created (somehow like a fresh install)?",
+        "answer": "Not really, but the csc-env tool might accomplish sort of what you might be looking for.\nIt will not delete files for you or anything like that, but it can be used to reset your .bashrc file for example",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 79,
+        "question": "How do you know with which protocol a data object was uploaded to Allas?",
+        "answer": "There is no 100% sure way to check this. However, if you have over 5 GB files you can check if they are stored as several object called as segments. If that is the case, then Swift protocol has been used. If you se just one big object, then S3 protocol has been used.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 80,
+        "question": "Is there a way of soft linking my data from allas to my working directory at /scratch/project_200…/user/ working directory?  (e.g., link -s /allas/data /scratch/project_200…/user/)",
+        "answer": "No.",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 81,
+        "question": "I try using the commands cd/scratch_projectname and /cd_projappl_projectname. Why nothing happens but the text \"No such file or directory\"?",
+        "answer": "After logging into CSC platform with your account, you can migrate to the `/scratch` partition of your project as follows:\n`cd /scratch/project_projectnumber`\nFor ex. If you have a project `project_1000110`, it should be:\n`cd /scratch/project_1000110`\nSimilarly, for migrating to the `/projappl` partition of your project, it would be:\n`cd /projappl/project_1000110`",
+        "source": "csc-enveff-20240207"
+    },
+    {
+        "idx": 82,
+        "question": "What kind of task can be done in login nodes directly, in addition to submitting batch  jobs?",
+        "answer": "You can use login node to get access to interactive nodes. You can also do some light-weight pre-processing of data in temporary directory in login node ( you have to move your data to $TMPDIR and then do preprocessing) before actual analysis. There are other useful things like checking disk usage and finding the information of different projects (commands: csc-workspaces; csc-projects) while being in login node.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 83,
+        "question": "What does it mean 'to run jobs in parallel'? Would they be related jobs that need information from eachother for example or something else?",
+        "answer": "Running in parallel means that the progam you're using has been programmed such that you can split the workload into smaller pieces, each being processed at the same time using multiple processes (cores). This is the fundamental principle of supercomputing, i.e. we split a heavy calculation into smaller pieces, compute them in parallel, and then combine the results at the end.\nRegarding information exchange, there are different types of parallel jobs. Sometimes the smaller pieces we split the job into are completely independent, in which case no information needs to be exchanged between them. This is sometimes called \"embarrasing parallelism\" or \"trivial parallelism\". Usually, however, the processes are not fully independent and information must be passed between the individual processes. Communication between processes is a very important topic when talking about parallel computing and is one of the reasons why you typically cannot just use arbitrarily many cores for your calculation, but the performance will level out at some point after which the performance does not improve anymore. There will simply be too much communication between the processes.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 84,
+        "question": "When I sign in to puhti via ssh on my linux computer, am I accessing puhti via a login or compute node?",
+        "answer": "Login node (aka, head node or user access node (uan))",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 85,
+        "question": "If I have a process that requires to read huge amount of data, is Mahti a good choice? I parallelized my code, but due to insufficient RAM it throws errors (I first used 32 cores in parallel in my code, then 8, then 4, none worked). However in Puhti with less cores (8) it works.",
+        "answer": "Mahti is a good choice if your application leverages lot of parallelism (18 cores) but if you need lot of memory, Puhti has better options for selecting nodes with different memory. Mahti node has fixed memory of 256 GB. As per reading huge files, Lustre (parallel file system on Mahti and Puhti) is fine. Please also note that Mahti resources are provisioned as per node basis (i.e., smallest allocation one can get is at least one node)",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 86,
+        "question": "Why Puhti, MAHTI, LUMI are not considered to be cloud enviroment as well?",
+        "answer": "Typically a cloud environment is exclusively available to you, whilst supercomputing environments are shared systems with even up to thousand simultaneous users. Supercomputers use batch job (queuing) systems for this reason, and they typically can also give access to much larger resource allocations because of this compared to cloud resources.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 87,
+        "question": "While accessing puhti via ssh (login node) how do I switch to a compute node?",
+        "answer": "By submitting batch jobs to queue or requesting an interactive session.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 88,
+        "question": "While using the puhti jupyter, if I have around 2 TB of files to process, how do I use CSC storage to manage it. I want the files on CSC aswell.",
+        "answer": "You have to first tranfer 2 TB of your data to the scratch area of Puhti (if you are a project manager, you can increase the scratch disk space in mycscs portal if needed)",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 89,
+        "question": "In the nodes you said there are several cores, are those \"threads\" or does each core has 2 threads like in local cpus?",
+        "answer": "Yes, each node has multiple cores (40 on Puhti, 128 on Mahti) and each physical CPU core has two hardware threads.\nIt should be noted that hyperthreading is not that useful in most HPC use cases. In most cases you should use 1 cpu/core per software thread.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 90,
+        "question": "I have been using the normal ssh  command ssh <username>@puhti.csc.fi    # replace <username> with your CSC username, e.g. myname@puhti.csc.fi to login to puhti but nowadays it works while adding ssh -m hmac-sha2-512? I'm using windows.",
+        "answer": "The need to explicitly specify the message authentication code (MAC) is related to a bug in some windows ssh clients.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 91,
+        "question": "Can we set read-only permissions to entire folders?",
+        "answer": "Sure, for example `chmod -R g-w my_folder` would make a folder `my_folder` and its contents read-only for your UNIX group members (i.e. others in your CSC project). `-R` activates the recursive mode.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 92,
+        "question": "Is the private SSH key restricted to one computer only? I have two computers, one for work (issued by HY) and the other is personal. If I connect to Puhti using the SSH key, do I have to generate two private/public key pairs for respective computers?",
+        "answer": "Technically it is possible to copy the private key to another computer (e.g. by moving it on a USB stick), but it's recommended to have separate keys for each computer. This has a couple of advantages:\nThe secret key never leaves your computer, so it's harder to steal it (think: losing the USB stick, someone getting it from the cloud service you uploaded it to for transfer...)\nIf you find that the key is compromised (e.g. you accidentally paste its password somewhere you didn't want to), it's easy to remove its public key part from the target machine while still retaining easy access from your other computer",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 93,
+        "question": "Are module handling recommendations (related to conda etc.) also relevant to cloud services like e-/cpouta?",
+        "answer": "Not really: Pouta does not use modules like the supercomputers do, as when you have a Pouta virtual machine, you are in complete control of it: you can install any software you like. It also doesn't use Lustre, so you don't need to worry about the small files created by conda installations. If you use different software with conflicting dependencies (e.g. two Python programs that need different versions of the same package), you of course need to use conda or other such tool for separating those environments each other, but no need to worry about Tykky or `module load`s or such.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 94,
+        "question": "I recently needed to use scikit-bio in jupyter-lab in puhti which wasn't available. Is there any method to load these specific packages for python in my own environment?",
+        "answer": "In this case you could install scikit-bio and jupyter-lab yourself using e.g. the Tykky tool.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 95,
+        "question": "What does it mean when it says we can \"write our own module files\"? Does this mean we just install our own software and package it into a module? What difference is that from just running a software that we installed on the puhti projappl for example?",
+        "answer": "when we say we can write our own module files, it means that we  install our own software and then we create lua file (Lua is a kind of scripting language) to load all dependent libraries and add executable paths for the installed software. This way, we can just load a module without needing to care for dependencies and adding paths before using it.  This is very important when there is a lot of software stack to manage. It may not be that important if we have few software programmes to manage. Alternatively, if you install a software and take care of adding binary paths and dependencies for it by yourself, that is just fine and no need to worrry about module system. In term of functionality there is no difference.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 96,
+        "question": "What is the difference between needing memory and needing cores? How can I determine what resources my job needs?",
+        "answer": "CPU cores are what your program uses to run calculations and otherwise execute your program (from a computer's point of view, each step in your program is actually some kind of a mathematical operation or a series of them). Memory is what holds the numbers on which those calculations are currently carried out: this could be variables, arrays, images, text... Note that this is different from disk space though: even if you handle e.g. terabytes of images from disk, it might be that only one image at a time is loaded in memory if they are processed one at a time. It's not easy to give \"one size fits all\" answer that would cover all cases when it comes to determining how much resources your job needs, but here are some pointers that might help you:\nhave you run your code on your own machine and either run out of memory or the execution takes up all available CPU?\nrun a small test in the `test` queue on Puhti, see what `seff <your jobid>` says and adjust accordingly",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 97,
+        "question": "How do I know if my job is considered as \"heavy\" computing or not? What would be the parameters (e.g. memory use) that define a job as light, moderate or heavy computing?",
+        "answer": "Bit difficult to suggest on a general level. Good starting point is to check application documentation where you may find whether the application is memory intensive, parallelisable or has specific resource needs. Besdes,the software itself, the amount of data you are processing can also decide what kind of resources you need. Once you get some idea about the software you can start with small data and perform some pilot experiments with minimal resources. You can then scale up the resources and data as needed. Only experience will help us better. Obviously, you can always ask the developer of the tool to know more information instantly and have a head start.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 98,
+        "question": "What is considered a 'task'? In terms of the batch job script. How do I know how many tasks my job will have and how many CPUs I will need per task?",
+        "answer": "Slurm tasks refers to the number of MPI processes you use to run your job. How many you can use depends on your software. If your job supports MPI, you may request multiple tasks, but the optimal number depends on other factors, e.g. how big your calculation is. Note that just adding more tasks may not make the calculation faster after a certain point (this needs to be tested). If your job does not support MPI, requesting multiple tasks would just result in running the same thing multiple times.\nBy default one thread (or \"CPU\" in Slurm terminology, `--cpus-per-task`) is launched for each task. If your software implements both MPI parallelism *and* OpenMP threading, you may launch multiple tasks and also multiple threads per task. The total number of threads (CPUs) can be at most equal to the number of physical cores on a single node, or virtual cores (2*physical) if using hyperthreading. If your software implements only OpenMP, then you should use just `--ntasks=1` (but multiple `--cpus-per-task=N` is ok)\nSo for the question \"how to know?\", 1) read the documentation (both the official documentation of your software and docs.csc.fi) and 2) test!",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 99,
+        "question": "Are we allowed to use input from one project and set the output to be in another project's scratch folder?",
+        "answer": "If you're a member of both projects, this is possible.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 100,
+        "question": "How do we know if increasing the resources will not offer so much to our tasks?",
+        "answer": "It may be hard to say beforehand, this is why it is good to test. E.g. run with 1, 2, 4, 8, ... cores and see does the job always get twice as fast when you double the cores. Rule of thumb is that the job should be *at least* 1.5 faster when doubling the number of cores.\nRegarding the memory, a good way is to do a test and then check with `seff` how much memory was used.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 101,
+        "question": "What causes the slower performance of runnig batch jobs during high load times? I noticed that during Christmas break my models were running much faster than e.g. a month earlier even though the model should take similar running times.",
+        "answer": "Are you sure that your job really ran faster, as opposed to just finishing earlier due to having spent less time in the queue?\nIf your job is disk i/o dependent it could be related to load on file system (i.e. /scratch can get slower under heavy load). Perhaps your jobs would benefit from using local nvme disk?",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 102,
+        "question": "how can we check e.g. if cores are waiting, How do we know that, and then how do we address that? If the seff doesn't see that all the memory is used, how would I know that I'm running out of memory and ralize that I need to request more?",
+        "answer": "Usually seff works fine enough. If your program uses more memory than allocated and is thus killed, `seff` fill show the job as `FAILED`. You can also see lines like `slurmstepd: error: Exceeded job memory limit` and `slurmstepd: error: StepId=21338959.batch exceeded memory limit (2367488 > 1048576), being killed` in the `slurm-<jobid>.out` file. When it comes to your run just being slower than you'd like, and cores idling, it's hard to give a definite answer on how to debug that: it depends a lot on what you are doing. You can always ask servicedesk@csc.fi for help in your specific case though, if you cannot figure out why your jobs aren't as efficient as they should be! Some pointers are available in performance checklist in docs.csc.fi.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 103,
+        "question": "What is sacct? How is it different from srun?",
+        "answer": "sacct = information about your past jobs, srun = submitting jobs in the batch script",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 104,
+        "question": "Can we reserve more memory but less CPU? Is a job killed if it's not using enough CPU/more memory than allocated?",
+        "answer": "Jobs will indeed be killed if they use more memory than is allocated: it would not be good if your program could write outside its allocated space, possibly on top of someone else's allocation. Jobs will not be killed for under utilizing CPU though (but it's still adviced to not reserve more than you need, both to shorten the time your jobs spend in the queue and to use the shared resources efficiently)",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 105,
+        "question": "Where can one check the disk workload?",
+        "answer": "The global workload of the disks in the system can be seen e.g. on puhti.csc.fi: the usage metrics box includes disk lag. When it comes to how disk-heavy your program is, you can often get an idea just by figuring out how much data it reads from/writes to disk, and whether it's a large or small number of files. You can also test whether your program gets faster if you try using the local NVMe disks at $TMPDIR.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 106,
+        "question": "What is an array job? and what does this line in a batch script mean? /appl/soft/bio/course/sacct_exercise/test-a ${SLURM_ARRAY_TASK_ID}",
+        "answer": "Array jobs is something you do when you have multiple similar independent tasks to run, for example you run the same analysis steps to multiple files.\n${SLURM_ARRAY_TASK_ID} = looping through the array jobs",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 107,
+        "question": "How can we determine if we should use an array a job instead of the other kinds?",
+        "answer": "When you have many independent similar jobs, you can use array jobs. You dont need to write any loops, array job will take care of submitting those independent jobs to cluster based on the parameters you have supplied to sbatch directive of array flag (see more information in the above link). Please note that these independent jobs should take reasonable computational time (if they are too short, it would be overkill to submit as a seperate job) and also come with limit on the number of jobs one can submit (on Puhti maximum limit is 200 jobs)",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 108,
+        "question": "What does root-level mean?",
+        "answer": "Root-level = main level when talking about file locations. A person with root level access = \"administrator,\" \"root user\" or \"superuser.\")\nAnd when talking about something being located \"at root\" or \"root level\", it means that it's location in the file system or such is directly at the \"root\" of the file system: there are no intermediate directories or such. For example a text file in someone's home directory might be found at `/home/someone/coolfile.txt`, whereas a file at root would be simply `/coolfile.txt` (but it would be unusual to have such a file in such a location)",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 109,
+        "question": "How do we know if our job would need an NVMe? Why doesn't the job use scratch for space?",
+        "answer": "One obvious symptom suggesting that NVMe would be good is if your job runs faster on your own laptop than on Puhti. The disk on laptops is NVMe.\nAlso, knowing what your job does is of course useful. If you know beforehand that it will read/write a lot of (small) files, then NVMe may be useful (both to increase performance and avoid stressing the file system for all users).\nBottom-line: scratch space sits on the shared file system and performs poorly if your job does a lot of I/O. For other use scratch is just fine.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 110,
+        "question": "From what I understood, loading  module loads its dependencies. Why then do we need to check with spider if there's anything else we need to load for our module?",
+        "answer": "module **spider** command does not load your application/sofwtare. It would only search if the searched module exists in the installations.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 111,
+        "question": "Are containers and images the same thing? What about dockers and tykky? A place where all the small files are treated as one large one if I understand correcty. What is a container registry/container wrapper?",
+        "answer": "People use containers and images interchangeably but they are not same. Container is more like an instance of image (or you can also think of container as image in action). When container is spawned, image is converted to a filesystem and you can launch as many containers as possible. Docker (also a company name) is a type of container platform like Singularity/Apptainer. Tykky is an in-house developed container wrapper at CSC to take of python-based installations of a complex software. Container registry is more like a database of images, usually hosted by organisations or companies. Dockerhub and quay.io are couple of examples of image registries.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 112,
+        "question": "What are the allas-cli-... directories created when using Allas?",
+        "answer": "allas-cli-utils is the CSC provided toolkit for using Allas. You can download it to your linux or mac if you wish to use Allas wit the same command that waht we have in Puhti and Mahti",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 113,
+        "question": "If file transfer takes longer than 8 hours and the Allas swift connection gets interrupted, what will happen? Will the files be corrupted?",
+        "answer": "In generally, you should remove the partly uploaded data and try again. There are special tools that you cann use in case of large data transfers.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 114,
+        "question": "I am transferring a whole folder to Allas and I am wondering whether I can be sure that the folder hierarchy is preserved even though Allas only has two levels of hierarchy (buckets and objects).",
+        "answer": ".tar archives are useful if you want to package your directory as a single file. If you want to be sure, then creating a tar archive (and optionally compressing) it before transfer to Allas is one way. If you use a-commands (e.g. a-put) to upload to Allas, then this will actually do the archiving for you, so no need to worry about it separately! One can also add `-c` option to compress it.",
+        "source": "csc-enveff-20240424"
+    },
+    {
+        "idx": 115,
+        "question": "What counts as heavy I/O? Opening 10/100/1000 files?",
+        "answer": "As a rule of thumb, pay attention when opening 1000s of files and you should **not** work with 10 000s-100 000s on Lustre. Working with 10-100 files is not a problem usually.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 116,
+        "question": "What counts as a \"small file\"? Does the file format matter?",
+        "answer": "It is hard to give an exact number, but small files typically refers to kB order of magnitude. File format does not really matter.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 117,
+        "question": "Do many small files cause issues if they're idle, or are they only an issue if they're constantly being accessed?",
+        "answer": "They can also cause issues even if they are idle. Especially having a lot of files in a single directory is not recommended. Having some kind of hierarchy is better (or even better, tar and compress the files).",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 118,
+        "question": "Why would we use the allas-conf -k instead of establisheing an S3 connection?",
+        "answer": "As you would probably have realised that S3 connection is persistent, this may have security concerns. Swift connection is more secure as you refresh for every 8 hours.\nin addition to the above, using S3 protocol is OK if you use it all the time, but if you have uploaded the data using Swfit protocol, then you should also download it with Swift protocol.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 119,
+        "question": "What should I do if there is data in our scratch from a previous user that I cannot delete?",
+        "answer": "You should send a ticket to <servicedesk@csc.fi>. Our admins can edit the permissions.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 120,
+        "question": "What do I do with data in scratch that we work with for more than 6 months?",
+        "answer": "Unfortunately, cleaning process will be in force on Puhti and is bit incovenient if you are in the middle of some analysis. If you have lot of data, please move them to allas during cleaning process. To ease this process, CSC has provided some easy-to-use utility commands like lcleaner. If the data is small enough and is mixed with program/config files, you might use /projappl space (which is more dedicated for storing compilied programs/packages/installation stuff). /projappl space will not be cleaned.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 121,
+        "question": "Do you need to do allas-conf -k only once or again each time you login with ssh? And again if you change the project you work on?",
+        "answer": "Once you logout from supercomputing environement, the env variable that stores your password will be unset.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 122,
+        "question": "Did I get it right, if I execute batch-script and before the run starts my laptop for example loses internet connection hence the ssh connection breaks, the batch job wont have the allas access?",
+        "answer": "Once you submit your batch script (which has already access to your allas credentials), that is fine. Your loosing connection to supercomputer later from laptop will not affect the already running batch job. to be precise, it is enough that you have submitted the job to the cluster.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 123,
+        "question": "Is $LOCAL_SCRATCH the NVMe?",
+        "answer": "Yes, that's correct.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 124,
+        "question": "If we reserve NVMe does the code run only there? What if we don't reserve enough and it runs out? How can we know what space we need, just the amount of storage of the files we want to process?",
+        "answer": "You have to reserve NVMe disk space in your batch script and move your data to the local disk area (i.e., NVMe disk area) and compute there. Once you finish your heavy I/O computation there, you have to move all your results back to parallel file system area (i.e., scratch). In short, you have to intentionally do the computation on NVMe and it does not happen there just because we reserve NVMe disk space. Yes. if we dont have enough space in NVMe, your batch job fails. It is difficult to know exact amount of NVMe space needed beforehand. It depends on your application input data and resulting data from your analysis. You can request bit more disk space than you need to be on  safe side.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 125,
+        "question": "NVME billing is pretty expensive, why is it billed so heavily in BUs?",
+        "answer": "NVMe is a scarce resource on CSC supercomputers, that's why it is more expensive than regular disk space. A little bit like GPU-resources.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 126,
+        "question": "What are binaries?",
+        "answer": "They are programs that you can run. Like a command. Some programming languages are intepreted, so you can just run the code itself. However, many codes need to be first compiled into a program (a binary, a.k.a. executable).",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 127,
+        "question": "Why should we compile software in $TEMPDIR first and then move it to projappl? Can't we do it in projappl directly? Do we also need to install a software there and then move it to projappl, or can we install it to projappl directly?",
+        "answer": "Because compilation usually creates a lot of I/O load. So moving that away from Lustre to the login node NVMe is recommended - it will make the compilation faster and does not cause lags in Lustre for others.\nIf the software is very simple and small, you could do compilation directly in /projappl as well.\nNo need to *install* in $TMPDIR, just *compile* it there, and then there are usually options you can give the build tools that install the software to /projappl when you run e.g. `make install`. E.g. `./configure --prefix=/projappl/...` and `-DCMAKE_INSTALL_PREFIX=/projappl/...`",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 128,
+        "question": "Is it possible to create a container that would be under the project, not under a specific user? I would wish that all project users have similar access to it.",
+        "answer": "Sure! Just move it to a shared directory under your project's /projappl\nAccess permissions can be edited with `chmod` commands. E.g., to give all project members execute permissions for the container, try `chmod g+x my_container.sif`",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 129,
+        "question": "If we're queuing for a  batch job, is there a way to estimate how much we would wait or our position in the queue?",
+        "answer": "Yes, you can add option `--start` in you `squeue` command (e.g. `squeue --me --start`) to see an estimate of when the job will start running. However, this is only a rough estimate and it may change depending on what jobs are submitted later on that may have a higher priority.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 130,
+        "question": "What are the login nodes available on puhti, i couldn't find a list of them or how to access a certain node in the docs.csc website about the disk areas or elsewhere. I'm currently on node 12 for example",
+        "answer": "They are `puhti-login11`, `puhti-login12`, `puhti-login14` and `puhti-login15`. You can for example go to specific login node on Puhti by specifying the login node information as : *ssh username@puhti-loginxx.csc.fi* (xx-> 11,12,14,15)",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 131,
+        "question": "What is a container engine and what does it do?",
+        "answer": "It is a piece of software that is used to build and run containers\nYou can think of container engine as some management system for containers: it can for exmaple spins up, cancel your containers when needed.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 132,
+        "question": "If a container was built using a different engine than Apptainer that CSC uses, do we need to use this apptainer build command, or is it for something else? I'm not sure I understand the function of this command.",
+        "answer": "It is container specific. Docker container engine just manages docker containers on host system and not for other containers.\nHowever, it is easy to convert Docker containers to Apptainer containers. It is often just a single command",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 133,
+        "question": "Do we need to bind a directory every time we run the software, or is this something that can be setup permamnently for a container?",
+        "answer": "It depends. You need to bind or mount a host file system when you are trying to write something permanently on disk. Just for running some command, you don't need to bind  a file sytem.  Host system always needs to be mounted during runtime.\nInstead of using --bind you can set APPTAINER_BIND variable. Syntax is the same as for --bind `export APPTAINER_BIND=\"dir1,dir2:/input`. This may make the command more readable if you have complex bind.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 134,
+        "question": "Could you please confirm if Tykky environments are only suitable for python/conda packages?",
+        "answer": "Yes, you can also install other than Python/Conda stuff with tykky. `conda-containerize update` command allows you to run any installation commands (e.g. clone repo from GitHub and install something). `wrap-container` command can also be used to generate wrapper scripts for an existing container.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 135,
+        "question": "When in sinteractive and we're running a container, are we able to submit batch jobs for more processing power",
+        "answer": "Yes. You can submit batch jobs from interactive nodes.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 136,
+        "question": "If I start an array job with four arrays, the output file will only show the billing unit consumption of one array (~1/4 of the total). Is there a way to see the BU consumption of the whole array job?",
+        "answer": "Did you use seff command to find the BUs? By default, seff gives information on the first array job. You can also try `seff <jobid>_1, seff <jobid>_2, seff <jobid>_3 ...`   You can also try using *sacct*  command for more details on job at a time  (`sacct -o jobname,jobid,reqmem,maxrss,timelimit,elapsed,state -j <slurmjobid>`)",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 137,
+        "question": "In addition to many small files, do many large files also pose a problem?",
+        "answer": "For large files, parallel file system is still better.  The real problem is with metadata handling. For the given data, if you supply in many small files, file system has to do many file I/O operations as comapared to the operations needed in hanlding teh same data in few bigger files.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 138,
+        "question": "Sorry about the long question, I'd just like to confirm that I understand it correctly, does using NVMe solve the problem with the many small files? (where it's just used to store the intermediate data during processing? because in that case then the software still has to access the same amount of large files so I'm a bit confused. Or are we supposed to move the data into the NVMe beforehand?)  And that would be in terms of the data we're running. And then when it comes to the software, if it has a lot of files in and of-itself, we need to use it in a container. These two things are ways to go around the 'large number of file' problem but for two separate scenarios?",
+        "answer": "The idea when using NVMe would be for example this: 1) you have a tar-package containing a lot of small files you need to process. You do not want to do it on Lustre, because it would be inefficient. 2) Instead, you copy the package containing the files to NVMe and only then decompress it (so that you at no point have a lot of files on Lustre). 3) On the NVMe, you process the data. 4) When you're done, you package the results and move them back to /scratch.\nThis could be done either in an interactive session or in a batch job. But yes, the important thing is that you need to *move* the data first to NVMe, and then also remember to move it back (because the NVMe is cleaned automatically immediately when the job ends).\nA container is another way to mitigate the large file number, since a container is just 1 file from the file system point of view.",
+        "source": "csc-enveff-20240515"
+    },
+    {
+        "idx": 139,
+        "question": "Do I get a notification that my csc account will be locked soon?",
+        "answer": "CSC sends an e-mail once a year requesting you to reset your password. Failure to reset the password will automatically lead to the locking of your account. CSC service desk (servicedesk@csc.fi) can help you if your account is locked for any reason.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 140,
+        "question": "What actually are remote graphics?",
+        "answer": "Any graphical application that is running on HPC environment. So it is like accessing a GUI tool (for example Jupyter notebook) on your personal computer browser (i.e., local environment) while the tool is running on a remote enviroment (e.g., HPC environment)",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 141,
+        "question": "Regarding the folder organization, I am lost on what is the folder ondemand? What is scratch?",
+        "answer": "Open ondemand folder refers to the folder on supercomputer web interface. Scratch folder refers to a type of diskspace that a CSC user gets on supercomputers. (FYI, Open ondemad is a technology that allows building web interfaces to supercomputers )",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 142,
+        "question": "Can I see the difference between the login nodes or supercomputer nodes. On the folders of my project I can't see the tmpdir",
+        "answer": "Once you login to supercomputer, you will be automatically in login nodes. HOME/Projappl/Scratch folders are available on login and compute nodes. so there is no difference for these folders on parallel file system. However Temporary folder is different.  You have to refer to $TMPDIR (try `echo $TMPDIR` to see the exact path) on login node and $LOCAL_SCRATCH on compute node.\nNote that $LOCAL_SCRATCH is available only if resources for it have been specifically requested in the batch job script or when starting an interactive session.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 143,
+        "question": "Which data storage should be used to install additional python libraries, virtual environments ?",
+        "answer": "Short answer is /projappl area for your project.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 144,
+        "question": "when do we use chmod and/chown to give access to files in subfolders to other group members?:)",
+        "answer": "By default the files and directories you create in /projappl and /scratch are accessible to all group members. You can use chmod to reduce the prermissions to your data. E.g. you could make a directory to be \"read.only\" for other project members with command   chmod -R g-w your-directory\nHaving a scratch directory, where only you have an access is not a good idea because if you later on leave from the CSC project, no one will have access to the data.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 145,
+        "question": "Should I always transfer local files to Allas first, then move them to Puhti/Mahti?",
+        "answer": "No need to move the data to allas first. But making data available in allas makes it convenient to move around different services quite quickly ad easily.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 146,
+        "question": "What would be the best method of moving large amount of individual files to an Allas bucket?",
+        "answer": "`rclone` with (-P flag, for progress ) would be one option.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 147,
+        "question": "How long can we store our data in Allas?",
+        "answer": "For the duration of your computing project. When the project is about to end, you need to download and store the data somewhere else, or extend the project.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 148,
+        "question": "How can we search the modules that are installed in Puhti/Mahti",
+        "answer": "The vast majority of all applications installed on CSC systems are implemented as modules, so the applications list in CSC documentation serves as a pretty comprehensive description of available modules.\nHowever, due to the large number of installed software, some modules may not have a documentation page. `module avail` shows all available modules (such that you can load directly without first loading some dependencies), `module spider <pattern>` allows searching for specific ones and also listing all modules, including those that cannot be loaded currently due to missing (not loaded) dependencies.\n`module spider` with no arguments shows all installed modules, but since the list is quite long it may not be that practical.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 149,
+        "question": "`module load StdEnv` # Load the default module environment -> what is dfault module environment",
+        "answer": "On Puhti it is `gcc/11.3.0`, `openmpi/4.1.4`, `intel-oneapi-mkl/2022.1.0`, `csc-tools`. In other words, it contains a specific compiler suite (gcc/11.3.0), MPI library (openmpi/4.1.4), linear algebra library (intel-oneapi-mkl/2022.1.0) and some tools developed by CSC (csc-tools).\n`module list` shows currently loaded modules, so you can always run that before and after a `module` command to see what changed.\nYou can also try `module show StdEnv` to see what loading the module does.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 150,
+        "question": "So when I log into Puhti, which project's BUs am I using if I have several ongoing projects? Can I move between projects to allocate my BU usage?",
+        "answer": "Project BUs are consumed when you run jobs (or have extended the project's maximum available storage space). For this reason, the only obligatory argument to provide when running jobs is the accounting project i.e. the CSC project whose BUs will be used for the job. So the project to be billed must always be specified.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 151,
+        "question": "What are the best settings (number of CPU, memory, image quality, and compression) for using the desktop in Puhti/Mahti and running programs like ParaView with a graphical interface? It has several settings, but the default ones are not good for smooth performance.",
+        "answer": "For ParaView, I would recommend trying the accelerated visualization, since it allows the software to run and render on GPUs. The performance will this way be significantly improved.\nMemory is a bit tricky to predict beforehand, this may depend on a case-by-case basis. The GPU nodes have 384 GB memory in total, so when reserving 1 GPU (out of the 4 available in total on a node), you can safely reserve up to 1/4 of the total memory (~90 GB).\nIf responsiveness is the main goal, higher compression may help in some cases. Then again, if accurate visual representation (while using the desktop) is important, compression should be as low as possible.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 152,
+        "question": "If my batch run takes e.g. 12 hours, can I just shut off Puhti (with e.g. exit-command) and my computer and the job stays running? Or is there a special command that is needed to shut the system AND keeping it running?",
+        "answer": "Yes. Once you submit your job with your batch script, you can log out of the supercomputer. Your submiited job stays in queue and when it gets the requested resoures your job will be executed on the cluster (on compute nodes). You don't need to do anything else than just submitting job which will be run irrespective of whether you are logged in or out of the supercomputer.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 153,
+        "question": "If only there were some convenient way of monitoring job progress...",
+        "answer": "`tail -f slurm-<job_id>.out` (watch the output file and print any new lines written to it). You may also replace `slurm-<job_id>.out` with any other log file that your job might be outputting.\nYou can also monitor your jobs in the queue with `squeue --me` (equivalent to `squeue -u $USER`), but don't run it too often since the command can be heavy on the batch job system (especially with hundreds of users using the system at the same time).",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 154,
+        "question": "how do i know which queue to use?",
+        "answer": "Each queue has its own specific cofigurations. Depending on the your use case, select the one that suits the best.  For example if you need GPUs for your job, there are partitions for GPUs: gpu and gputest. You can also type `sinfo -s` on the commandline terminal on Puhti to see similar information. Just for insights, these partitions are made out of different needs of diverse set of jobs that users would have in HPC environemnt.",
+        "source": "csc-enveff-20241003"
+    },
+    {
+        "idx": 155,
+        "question": "Which are the best ways to transfer files to and from Allas? Prefereably easy ways, since not all the users are \"computer-persons\".",
+        "answer": "The easiest way for non \"computer savvy\" persons is probably to use the graphical user interface in the HPC web interfaces we offer, e.g. www.puhti.csc.fi.\nOn the command-line, using the a-tools is easier to use than e.g. rclone.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 156,
+        "question": "I use Puhti. Data size is 1GB. How should I input that data for efficient GPU usage? Local scratch, /scratch, allas, what else to take into notice?",
+        "answer": "Data to be used in computing workloads should be transferred first to /scratch. Then depending on the nature of the data and workload (a lot of small files or few big ones, a lot of IO being done or not) it is ok to use /scratch or then local scratch. So short answer it depends.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 157,
+        "question": "What is the practical difference of using a-conmand, rclone and s3cmd?",
+        "answer": "a-command and rclone can be used in swift and s3 protocols. S3cmd command uses s3 protocol. a-commands are bit safer to use and will not overrides the objects in allas. Rclone may not ask before overriding it.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 158,
+        "question": "If I were to use th `$LOCAL_SCRATCH` in my computing nodes, what is actually more efficent, transfering from scratch or from allas object?",
+        "answer": "If the data is available in both, copying from `/scratch` is faster. If the data is in Allas only it's best to copy it directly to `$LOCAL_SCRATCH`.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 159,
+        "question": "I have recently used allas-backup. Some time ago I create a backup of one folder. Yesterday, I used allas-backup folder again, but it seems it does the entire backup again. What is the command to do the incremental copy?",
+        "answer": "allas-backup automatically creates a project-specific backup repository in the Allas storage service at CSC and uses it for *cumulative* backups. -- different versions of a dataset can be stored so that in the case of a new dataset version, only the changes copared to the previous version needs to be stored.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 160,
+        "question": "Can allas-backup be used from ePouta and cPouta?",
+        "answer": "cPouta works as long as you install the allas-cli-utils developed by CSC in your VM in cPouta.\nePouta instances live in a separate network and may not have access to allas which is on the public network. As epouta service is a self-service model, you can obviously relax the firewalls or netwroks at your own risk. CSC has no control on it. In recent SD environment (SD Desktop), you can only access encrypted data on allas.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 161,
+        "question": "Can tha Allas commands be used in the exact same way from Mahti as from Puhti?",
+        "answer": "Yes. One can use a-commands in the same way, both on Mahti and Puhti.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 162,
+        "question": "Do we need to add the path of our tykky container to the environmental variable path only once?",
+        "answer": "The `export` command will only be effective for the current session. If you for example log out and log back in, all changes will be lost. If you wish to make some change permanent, you can e.g. add the `export` comamnd to your `$HOME/.bashrc` file. It should be noted that doing so may cause conflicts with other software, so it's not generally recommended. This is especially true for Tykky installed software. It's best to have only one such software in your `$PATH` at any one time, as they often conflict with each other. So only add them to your `$PATH` when using them. You can e.g. add the `export` command to your batch job script.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 163,
+        "question": "Im interested to get my some of my codes from puhti to be stored in private gitlab repo. What should I do? I am familiar with ssh keys but I am not sure how it goes between supercomputer and gitlab?",
+        "answer": "Git is available on Puhti, so pushing code to a private gitlab repo should be no issue. To use SSH keys to authenticate, you should create a key pair on Puhti and register the public key in your gitlab. Please remember to keep your private key safe (don't change its permissions, it should be `-rw-------`, i.e. `600` in numeric form)!\nNote: git is available directly in the login nodes. If working in a compute node (e.g. interactive session) you need to load it as a module `module load git`.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 164,
+        "question": "Having a \"database\" consisting of 100k directories, each containing about 10 files, what would be the recommended way of storing these?",
+        "answer": "If you are working with flatfiles in database and the need for queries is very less, you might use it under Lustre (generally not advised). if the need grows, the better approach would be is to use $LOCAL_SCRATCH. Use of database in $LOCAL_SCRATCH will not cause any issues on parallel file system. It just requires that you have to stage and unstage it from local_scratch, otherwise database will be lost. However, if there is a great need for querying those files from database and you need this database more frequently, the recommendation is to use this database on cPouta/Rahti and query it from there.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 165,
+        "question": "Would you recommend using Apptainer (vs docker) also in cPouta/ePouta?",
+        "answer": "Both work fine in cPouta/ePouta environment. If the VM instance is shared by many users, I would go with Apptainers. Just FYI, Apptainer is more suitable for scientific applications on HPC systems. Docker is more for microservices in more isolated environments.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 166,
+        "question": "Are there any geographic restrictions in accessing CSC services? In other words can I work with all of these services from abroad?",
+        "answer": "Generally, there are no restrictions as such. But there can be some restrictions due to some state regulations from time to time. Also note that CSC does lot of  services of which some of them may be restricted (sensitive data or similar services) worldwide  for security reasons.",
+        "source": "csc-enveff-20241107"
+    },
+    {
+        "idx": 167,
+        "question": "Is there a way to reload all sticky modules (with one command), if you first have unloaded all sticky modules.",
+        "answer": "If you have \"force purged\" all modules, you can get the default environment with `module restore` but it will not reload non-default sticky modules you may have loaded previously.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 168,
+        "question": "What does RPM stand for?",
+        "answer": "RPM stands for Redhat Package Manager. It is a popular tool for distributing Linux software as binaries for direct installation in the OS image.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 169,
+        "question": "If I installed a software and prepared a module file by myself, is there a place I can contribute my module to the LUMI user community? Maybe it can save time when a new LUMI user is struggling installing the same exact software.",
+        "answer": "Yes, of course. We have a GitHub repository for that. Just create a pull request there and we will have a look and merge it",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 170,
+        "question": "Which changes were made in `lumi-container-wrapper` compared to `tykky`?",
+        "answer": "It uses a different base container better suited for LUMI and for Python it is configure to build upon cray-python.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 171,
+        "question": "In general, if I set export EBU_USER_PREFIX for project directory, do I also need to set another one for the scratch?",
+        "answer": "No, it points to the root of the software installation which is one clear place. The reason to install in `.project` and not in `/scratch` is that you want the software installation to be available for your whole project. Data on `/scratch` is not meant to be there for the whole project but can be erased after 90 days which is not what you want with your software installation.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 172,
+        "question": "Is it possible to get an exemption from the the maximum 2 day allocation?",
+        "answer": "No. No exceptions are made at all. We don't want nodes to be monopolized by a user and it makes maintenance more difficult. Moreover, given the intrinsic instability of large clusters it is essential that jobs use codes that store intermediate states from which can be restarted. Users have been using dependent jobs with success to automatically start the follow-on job after the previous one ends.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 173,
+        "question": "Is it not possible to use the `singularity build` command?",
+        "answer": "Not all options of `singularity build` work. Any build requiring fakeroot will fail as that is disabled due to security concerns.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 174,
+        "question": "Does this (binding tasks to resrouces) mean that it will be necessary to use custom bindings to align tasks with specific NUMA domains on each CPU? (Since NUMA domains seem to be a level in-between cores and sockets)",
+        "answer": "If you are using all cores on an exclusive node the standard ways in which Slurm distributes processes and threads may do just what you want.\nEven if, e.g., it would turn out that it is better to use only 75% of the cores and you would be using 16 MPI processes with 6 threads per process, then a creative solution is to ask Slurm for 8 cores per task and then set `OMP_NUM_THREADS=6` to only start 6 threads. There are often creative solutions.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 175,
+        "question": "If we enable hardware threads for a job/allocation, does \"--cpus-per-task\" become HW threads?",
+        "answer": "Yes",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 176,
+        "question": "Is it possible to make sure a job requesting 16 cores is allocated all cores in one NUMA domain?",
+        "answer": "For a sub-node allocation, you will get random cores depending on which cores are available",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 177,
+        "question": "To access /scratch/ from a container, we have to mount it. However, we need the full path and not just the symlink. Where do we find the full path?",
+        "answer": "You can use `file /scratch/project_465000522` for example. Don't try to mount the whole scratch. That will not work. The `project_*` subdirectories in `/scratch` are distributed across the 4 file systems of LUMI-P. `ls -l /scratch/project_465000522` will actually show you which file system is serving that project's scratch directory.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 178,
+        "question": "What is the preferred way for transferring data between LUMI and some external server or other supercomputer e.g. CSC Mahti?",
+        "answer": "Mahti is so close to LUMI (as far as I know even in the same data centre but a different hall) that connection latency should not limit bandwidth so that you can just use sftp.\nUsing allas as intermediate system is also an option.\nFor supercomputers that are \"farther away\" from LUMI where bandwidth is a problem when using sftp, the LUMI-O object storage is a solution as the tools that read from the object storage use so-called \"multi-stream transport\" so that they can better deal with connections with a high latency.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 179,
+        "question": "Some slides said that GPUs have 128 GB mem, but when I queried the information with the HIP-framework it only returned 64 GB mem. Does it differ on different partitions or something?",
+        "answer": "Each GPU has 128GB but each GPU conists of 2 dies (basically independent GPUs). Each of those has 64GB. Basically each LUMI-G node has in practise 8 GPUs on 4 cards.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 180,
+        "question": "My question is how compatible the GPU partitions/software are with DL frameworks such as Tensorflow and PyTorch. Are the systems fully ROCm compatible? Are there downsides compared to CUDA implementations?",
+        "answer": "ROCm is not as mature as CUDA yet but most DL frameworks work already quite well.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 181,
+        "question": "Are open source simulation software such as quantum espresso centrally installed on LUMI?",
+        "answer": "No, almost no softare (except debugger, profilers) is installed globally. But it is very easy to install SW yourself with Easybuild using our easyconfigs (basically building recipes).",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 182,
+        "question": "The program I am using and developing requires certain dependencies such as paralution, PETSc, Boost... Is it possible to manually install these dependencies if not available among the modules listed?",
+        "answer": "Yes, it is actually very easy (and we have some configurations on Boost on the system, try `module spider Boost`...)\nWe have an installation recipe for one configuration of PETSc also.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 183,
+        "question": "Can I use modules that are available on CSC supercomputers?",
+        "answer": "Basically we use different set of modules and even a different primary system to manage the modules. The machines are different, the team managing the machine is different, and the licenses for software on puhti or mahti do not always allow use on LUMI, and certainly not for all users on LUMI, while we have no way to control who has access and who has not.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 184,
+        "question": "If i find out that my application is able to work in different programming environments (different compilers), which should I prefer? Cray?",
+        "answer": "No answer that is always right, you have to benchmark to know.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 185,
+        "question": "I'm just interested in the opportunity to use one particular commercial software from within, say, Singularity container on LUMI. So, if I sort out the license server issues, is it possible for virtually any kind of software or there are limitations? If yes, is it, overall, a good idea? Does it make the performance of the software run deteriorate?",
+        "answer": "Unless there is MPI involved you can try to run any, say DockerHub, container image on LUMI. For the MPI parallel software packages it may still work on a single node but do not expect them to run on multiple computing nodes.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 186,
+        "question": "is there a module similar to `cray-libsci` for loading/linking `hipBlas`? So far I've been doing that manually. I tried to `module spider hipblas` but that returns nothing.",
+        "answer": "No, there is not.\nAlso, all of ROCm is in a single module and several of those modules don't contain the necessary information to search for components with `module spider`.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 187,
+        "question": "Is there a similar tool to `csc-projects` for checking info on your projects?",
+        "answer": "Yes, please try `lumi-allocations` command-line tool.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 188,
+        "question": "What is LUMI-D?",
+        "answer": "It is the name that was used for the \"Data Analytics and Visualisation partition\" which basically turns out to be two partitions that need a different setup. It consists of 8 nodes with 4 TB of memory that really have the same architecture as the login nodes hence can use software of what we call `partition/L`, and 8 nodes with 8 NVIDIA A30 GPUs for visualisation each.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 189,
+        "question": "Would it be possible to show an example of how to run R interactively on a compute node?",
+        "answer": "If you don't need X11, one way is\n```\nsrun -n 1 -c 1 -t 1:00:00 -p small -A project_465000XXX --pty bash\nmodule load cray-R\nR\n```\nwhich would ask for 1 core for 1 hour. For some shared memory parallel processing you'd use a larger value for c but you may have to set environment variables to tell R to use more threads.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 190,
+        "question": "May be a beginner question.. When to work with GPU nodes and when it is less efficient to use it? Does it depend on the structure of the data or the software used? Is it possible to use GPU nodes with R scripts?",
+        "answer": "GPU comute requires software that explicitly supports compute on GPU. GPUs are never used automatically. Base R does not use GPU compute. Some R packages may as in principle some large linear algebra operations that are used in statistics may benefit from GPU acceleration. However, they will have to support AMD GPUs and not NVIDIA GPUs. There is no simple answer when GPU compute offers benefits and when it does not as it depends a lot on the software that is being used also.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 191,
+        "question": "How to monitor the progress / resources use (e.g. how much RAM / # cores are actually used) of currently running and finished batch jobs?",
+        "answer": "Slurm `sstat` command can give information on running jobs. Once the job has finished, `sacct` can be used. Both commands have very customizable output but they will not tell you core per core how that core was used. Then you need to do active profiling.\nYou can also attach an interactive job step to a running job. Commands like `top` and `htop` (the latter provided by the `systools` module) should work to monitor the CPU use.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 192,
+        "question": "Do job-arrays open program the number of processes which we specified with --ntasks=1? or it will open 16 independent jobs with 1 processes for each job?",
+        "answer": "A job array with 16 elements in the job array is 16 jobs for the scheduler if that is what you mean. If you want multiple processes in one job you'd submit a single job for the combined resources of all 16 jobs and then use srun to start 16 processes in that job.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 193,
+        "question": "What happens if we choose job-array=1-16 and --ntasks=2? It will use 16 jobs and each jobs has 2 tasks, right?",
+        "answer": "Yes. After all some people may want to use a job array for management where each element of the job array is an MPI program.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 194,
+        "question": "Regarding the containers and MPI... If I want to run my software on multiple nodes from within a Singularity container with decent scalability, should I use host (LUMI's) MPI, right? Then, which MPI should I make this software work with? Open MPI, Intel MPI - don't work on LUMI, right? What should I aim at then?",
+        "answer": "The main advise it to avoid containers and software that comes as binaries when you want to use MPI. It is often a pain to get the software to work properly. Containers are good for some level of portability between sufficiently similar machines with a close enough OS kernel, same hardware and same kernel modules, and were never meant to be portable in all cases. They work very well in, e.g., a cluster management environment (And they are used on the LUMI management nodes) but then you know that the containers will be moving between identical hardware (or very similar hardware if the vendor provides them ready-to-run).",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 195,
+        "question": "Is it possible to list all nodes with their resource occupation? I want to see how many GPUs / memory is available on different nodes.",
+        "answer": "All GPU nodes are identical. There is only one node type. And the majority of the GPU nodes is job exclusive so another job could not even start on them.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 196,
+        "question": "If my application utilizes only 1 GPU, will it still hold the whole node with all GPUs?",
+        "answer": "It depends on what partition you use. If you use `standard-g`, yes and you will pay for the full node. On `small-g` you are billed based on a combination of memory use, core use and GPU use (as if, e.g., you ask for half the CPU memory of a node you basically make it impossible for others to efficiently use half of the GPUs and half of the CPU cores, so you would be billed for half a node). But it makes no sense to try to be cleverer than the scheduler and think that \"look, there are two GPUs free on that node so if I now submit a job that requires only 2 GPUs it will run immediately\" as the scheduler may already have reserved those resources for another job for which it is gathering enough GPUs or nodes to run.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 197,
+        "question": "Is it possible for us as users to see the current status of LUMI nodes (e.g. using dashboard or a command line)? I mean how many nodes are used or available to work? How many jobs are currently queuing (including other users). I just need to know what would be the expected waiting time for running my jobs.",
+        "answer": "`sinfo` gives some information but that tells nothing about the queueing time for a job. Any command that gives such information is basically a random number generator. Other jobs can end sooner making resources available earlier, or other users with higher priority jobs may enter the queue and push your job further back.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 198,
+        "question": "Are nodes assigned exclusively for projects? I mean, If I am submitting a job for a particular project, would I have access to most of the resources or for specific nodes? Is there a quota per project and how to know how much of this quotaa is used?",
+        "answer": "Nodes are either shared among jobs or exclusively assigned to jobs depending on the partition.\nEach job is also attached to a project for billing purposes. The command to check how much you have consumed is `lumi-allocations`.\nAnd each job also runs as a user which determines what you can access on the system.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 199,
+        "question": "How priority is determined? Does submitting more jobs or jobs that consume time or memory results in lower priority? Does priority is determined per user or project?",
+        "answer": "We don't have precise details and it would make no sense either as it is a complicated formula that can be adjusted if the need arises to ensure fair use of LUMI. Priority is a property of a job, not of a project or of a user, but it can be influenced by factors that are user- or project-dependent, like fair use which is actually difficult on LUMI due to the different size of allocations, some projects have a 100 times more compute time than some others so the scheduler should also make sure that those users with huge projects can run jobs often enough.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 200,
+        "question": "Is it possible to submit a job that may take more than 3 days?",
+        "answer": "No, and we make no exceptions at all. This is on one hand to prevent monopolisation of a partition by a single user, and on the other hand because it creates a maintenance nightmare as a rolling update of the system can take as long as the longest running job. Moreover, it is also a protection against yourself as large systems are inherently less stable than smaller systems so there is a much higher chance that your long running job may fail an hour before it would have finished.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 201,
+        "question": "If I allocate only a single GPU, will I automatically get assigned a GPU and a CPU which are \"close\" in the setup? (Assuming such an allocation is available)",
+        "answer": "The only way to properly control binding is on exclusive nodes.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 202,
+        "question": "If I reserve 2 GPUs, can I expect them to be the two GCDs on 1 device?",
+        "answer": "No unfortunately, just as Slurm can also not guarantee on the CPU partition that all your cores would be on a single CCD (or within a single cache domain).",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 203,
+        "question": "Are files removed from LUMI after certain days of no activity?",
+        "answer": "All files of your project are removed 90 days after the end of the project and not recoverable.\nAnd note that LUMI is not meant for data archiving. There is **no backup**, not even of the home directory. You are responsible for transfering all data to an external storage service, likely your home institute.",
+        "source": "lumi-1day-20230509"
+    },
+    {
+        "idx": 204,
+        "question": "When we run `sbatch` with `--cpus-per-node=X` are we allocating X cores or X CCDs or X NUMA nodes ...?",
+        "answer": "You allocate cores (not threads).\nSlurm had threads (hardware threads), cores (physical cores) and CPUs. A CPU is the smallest individually allocatable unit which on LUMI is configured to be the core.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 205,
+        "question": "I have been experiencing very long queueing times recently and have been warned that i am out of storage hours although i have more or less cleaned my output (|I am aware disk space and storage hours are not the same thing) but i am wondering if these long times are related to storage hours",
+        "answer": "It's not related. Removing files when running out of storage allocation (in TB/hours) does make the TB/hours as each file stored on LUMI will consumes these TB/hours from your allocation as long as it's present on the system. When you delete a file, it will stop being billed but the TB/hours consumed will still be definitively gone.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 206,
+        "question": "Out of curiosity, if LUMI is a GPU-first system, why offer (what remains a quite large amount of) CPU-only nodes?",
+        "answer": "I think there are many answers to that question. I guess that some are political, but they idea is also to support heterogenous jobs with some parts of a workflow to run on CPU nodes with others running on GPUs.\nAdditionally, LUMI performance is 2% LUMI-C and 98% LUMI-G.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 207,
+        "question": "When we run `sbatch` with `--gpus-per-node=X`, what are we allocating?",
+        "answer": "One GCD, so you can ask for a maximum of 8 per LUMI-G node.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 208,
+        "question": "I've been communicated that GPUs process batches of 32 items in 1 cycle on Nvidia (ie. using batch size of 33 first does 32 items in one cycle and 1 item in a separate cycle). Is this the same on AMD? And is this a hardware feature, as one could assume?",
+        "answer": "AMD compute GPUs use 64-wide wavefronts but there is a catch. In practice, the wavefront will be divided in 4x16 workitems which match the compute units (CUs) architecture that feature 4x16-wide SIMD units. Each of these units are assigned a wavefront. The wavefront once assigned to one SIMD unit will be processed in 4 cycles (16 workitems/cycle). As there is 4 SIMD units per CU, 4 wavefronts can be active at the same time in a CU and the total throughput of a CU can be seen as 1x 64-wide wavefront/cycle/CU.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 209,
+        "question": "How are GPU hours billed on standard-g and on small-g? Is it the number of GPU hours that you request for a job, using the argument #SBATCH --time, or is it the actual GPU usage per job, which is usually less than the requested hours?",
+        "answer": "For GPU compute, your project is allocated GPU-core-hours that are consumed when running jobs on the GPU nodes\nFor the standard-g partition, where full nodes are allocated, the 4 GPUs modules are billed. For the small-g and dev-g Slurm partitions, where allocation can be done at the level of Graphics Compute Dies (GCD), you will be billed at a 0.5 rate per GCD allocated.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 210,
+        "question": "If e.g. I request #SBATCH --time=24h and my job fails after 2 hours, am I billed for 24h or for 2h?",
+        "answer": "You should be billed for 2 hours if your job is killed. Beware that there is a possibility that your job hangs when your job fails and you'd be billed for the time it hangs as well.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 211,
+        "question": "If we need to compile a library with gcc to generate our executables with support for MPI, do we have to load all the corresponding Cray modules or one of the PrgEnvs and the cray MPI module?",
+        "answer": "Most of the time only loading `PrgEnv-gnu` is sufficient as the MPI module is loaded by default. The Cray compiler wrapper will automatically link to the correct MPI library for the Programming Environment you selected by loading a `PrgEnv-*` module.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 212,
+        "question": "What does it mean that a module is hidden?, it seems that it would be silently skipped, how we can change that state?",
+        "answer": "It means that the is not listed in any searches by default because it might have problems or incompatibilities. you can display all modules including the hidden ones by loading the `ModulePowerUser/LUMI` module.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 213,
+        "question": "Do we have a PyTorch module?",
+        "answer": "Yes, as user installable with EasyBuild or in CSC software collecion",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 214,
+        "question": "What is the difference between `lumi-container-wrapper/cotainr` and Singularity containers?",
+        "answer": "Both our tools use singularity in the background but help you with creating the containers, so you don't have to build the container yourself.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 215,
+        "question": "Let's say I want to build PyTorch (with GPU support of course). Am I understanding correctly that I should load PrgEnv-amd?",
+        "answer": "For PyTorch the way to go is to use GNU for the host (CPU) compilation in conjunction with the `rocm` module to have access to `hipcc` for GPU code compilation. Compiling PyTorch with `PrgEnv-cray` or `PrgEnv-amd` is likely to fail due to some packages using intel flavoured inline assembly that is not supported by Clang based compilers.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 216,
+        "question": "Regarding long queue times, would using the small nodes instead of the standard nodes help as some of the runs are literally taking only 2 minutes to run, which prepare the model for the actual production run that should be run in standard nodes?",
+        "answer": "It may or may not and the answer is time-dependent. They are scheduled fairly independently. If those 2-minute jobs are also very small in node count (which I assume as you want to run them in small) and if the time you request is then also very low (like 10 minutes or so to be sure), they are ideal as backfill though and may start quickly on standard/standard-g actually and actually only use time that would otherwise been wasted.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 217,
+        "question": "Why does the `small` partition allow to allocate 256G memory per node while `debug` allows only 224G?",
+        "answer": "It's because the high-memory nodes (512GB and 1TB) are in the `small` partition. Standard nodes in both `small` and `debug` have the same amount of memory available (224GB). If you go above that in the `small` partition, you will get an allocation on one of the high-memory nodes instead of a a standard one. Note that if you go above 2GB/cores you will be billed for this extra memory usage.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 218,
+        "question": "How much memory can be allocated on 512G and 1TB nodes?",
+        "answer": "On all nodes of LUMI it is the physcial amount of RAM minus 32 GB (480 GB and 992 GB). For the LUMI-G nodes: 512 GB installed, 480 GB available.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 219,
+        "question": "Does `--ntasks=X`  signify the number of `srun` calls, i.e. number of steps in a job?",
+        "answer": "No. It is used inside `srun`. `srun` creates one job step with multiple tasks, each task basically being a copy of a process that is started. It is possible though to ask sbatch for, e.g, 5 tasks with 4 cores each, and then use multiple `srun` commands with each `srun` asking to create 1 task with 4 cores. Unfortunately we do see problems with network configurations when trying to run multiple job steps with multple `srun` commands simultaneously (by starting them in the background with an & and then waiting untill all have ended). You would use `--ntasks=X`, e.g., to start an MPI job with X ranks.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 220,
+        "question": "I am confused when you could define, say `--ntasks=8` and `--cpus-per-task=2`. Are we then allocating 16 cores or 8 cores?",
+        "answer": "16 cores. Each task can then use 2 cores which would be the case for a hybrid MPI/OpenMP job. It would also guarantee that these cores are in groups of 2, because on `small` you would have no guarantee that all cores are on a single node. It may instead use cores from several nodes.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 221,
+        "question": "What does the numbers in `srun --cpu-bind` option represent `fe00` etc?",
+        "answer": "These are hexadecimal numbers where each bit represents a core (actually hardware thread to be precise) with the lowest order bit representing core 0. So for `fe00`: do not use core 0-7 (the last two 0's, so 8 zero bits), then the e corresponds to the bit pattern `1110` so do not use core 8 but use core 9, 10 and 11, and `f` corresponds to the bit pattern `1111` which is then use cores 12, 13, 14 and 15. So effectively: this concrete example means use CCD 1 (they are numbered from 0) except for the first core of that CCD which cannot be used because it is set aside for the OS and not available to Slurm.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 222,
+        "question": "What is the default striping behaviour if we write a file without calling `lfs setstripe`?",
+        "answer": "By default only a single OST will be used. This is to avoid problems with users who don't understand LUSTRE and create lots of small files. The more OSTs a file is spread over, the more servers the metadata server has to talk to when opening and closing a file, and if these are not used anyway this is a waste of resources. It may not seem logical though on a system that is built for large applications and large files... However, I'm sure there are plenty of people who in practice dump a dataset on LUMI as thousands of 100 kB files and refuse to do the effort to use a structured file format to host the whole dataset in a single file. And then there are those Conda installations with 100k small files.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 223,
+        "question": "Does striping matter only if I/O is the bottleneck?",
+        "answer": "Mostly. But then we have users who write files that are literally 100s of GB and then it really matters.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 224,
+        "question": "I just checked. My python venv seems to contain ~6k files. Did not know about the possibility to containerize it before today. Is it worth doing in this case, or if not, how many files should I have before containerizing?",
+        "answer": "It's hard to put a hard number on it as it also depends on how the files are used. We tend to consider 6k as still acceptable though it is a lot.  It also depends on how you use them. If you run jobs that would start that Python process on 100's of cores simultaneously it is of course a bigger problem than if you have only one instance of Python running at a time. But as a reference: one LUMI-P file system is capable of probably 200k metadata operations per second which is not much and surprising little if you compare that to what you can do on a local SSD in a laptop. IOPS don't scale well when you try to build larger storage systems. If your venv works well with lumi-container-wrapper it may not be much work though to test if it is worth trying.\nIt is also not just a LUMI thing but a problem on all large supercomputers.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 225,
+        "question": "Does LUMI support Jupyter notebooks or has a Jupyter hub? As one of the task of my project is to create catalogs / jupyter notebooks for the data generated in the project.",
+        "answer": "Since the data cannot stay on LUMI after your project - LUMI is not a data archive solution - I wonder if LUMI is even the ideal machine to develop those notebooks or if that should be done with the machine where the data will ultimately land on?\nAnd if the data is really important to you: Please be aware that there are **no backups** on LUMI!",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 226,
+        "question": "Does LUMI has interactive nodes through VNC to use the visualization nodes interactively?",
+        "answer": "VNC is available through the lumi-vnc module which contains help about how it works. Light VNC sessions can run on the login nodes, but you can always start an interactive job on a compute node, start VNC there and the `start-vnc` script will actually tell you how you can connect to the VNC server from outside using either a VNC client (the server is TurboVNC) or via a web browser (less efficient though for heavy graphics).",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 227,
+        "question": "One question regarding SLURM job scripts: on our clusters, I am using the command `seff $SLURM_JOBID` at the end of the file to get output on the consumed resources. But I think `seff` is not available on LUMI?",
+        "answer": "It is not on LUMI. It is actually an optional command and not part of core Slurm. We've tested `seff` and it turns out that the numbers that it produces on LUMI are wrong because it doesn't deal correctly with the way we do hyperthreading and report about that in the Slurm database. If you really want to try, seff is in the LUMI Software Library but don't send us tickets about the wrong output. We know the output is wrong in most cases.",
+        "source": "lumi-1day-20230921"
+    },
+    {
+        "idx": 228,
+        "question": "What does CCD stand for?",
+        "answer": "Core complex dies. There are 8 CCDs per processor with 8 cores each. LUMI-C has 2 processors (CPUs) per node while LUMI-G nodes have one.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 229,
+        "question": "What is the use of NUMA",
+        "answer": "It is a way of designing CPUs. It means that not all cores have the same memory access time with regards to L3 cache. So data stored in one L3 cache (shared by 8 cores) can be accessed very efficiently by those 8 cores but takes longer to be access by the other 56 cores in that CPU.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 230,
+        "question": "The GNU compilers do not have OpenMP offload to GPUs, ok. But can we use them with HIP?",
+        "answer": "Not to compile HIP code but we have build applications mixing HIP and Fortran using the Cray/AMD compilers for HIP and GNU gfortran for the fortran part. HIP code can only be compiled using a LLVM/clang based compiler like the AMD ROCm compilers or the Cray C/C++ compilers. But this is precisely why you have to load the `rocm` module when using the GNU or Cray compilers to compile for the GPUs...",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 231,
+        "question": "Are the modules ```LUMI/22.08 (S,D)    LUMI/22.12 (S)    LUMI/23.03```... tool chains ?",
+        "answer": "They are software stacks.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 232,
+        "question": "What are differences between GNU GCC compiler and Cray compilers?",
+        "answer": "They are totally different code bases to do the same thing. They are as different as Chrome and Firefox are: Just as these are two browsers that can browse the same web pages, the Cray and GNU compilers are two sets of compilers that can compile the same code but have nothing in common otherwise. The Cray compilers are based on Clang and LLVM technology.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 233,
+        "question": "Are these `craype-...` modules loaded automatically when you loadthe software stack?",
+        "answer": "By default, when you log in, PrgEnv-cray is loaded. It includes the Cray compilers, cray-mpich and cray-libsci (BLAS, LAPACK, ...)",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 234,
+        "question": "How do software stacks, Programming Env, tool-chains are related to each other conceptually?",
+        "answer": "Basically Programming Env is compiler (C,C++,Fortran), it's runtime libraries and entire set of libraries built against the compiler (AMD environment lacks Fortran compiler); Software Stack is entire application collection built with possibly all Programming Environments in a given release version (toolchains); Toolchain is technical concept for a specific Programming Env version and fixed set of related libraries.\nSoftware Stack could be `CrayEnv` (native Cray Programming Environment), `LUMI` or `Spack`\nIn practice you can select Programming Env with either `PrgEnv-` (`gnu`, `cray`, `amd`) modules (Cray's native) or `cpeGNU`, `cpeCray`, `cpeAMD`; these are equivalent but latter ones are used in LUMI toolchains\nToolchain is a concept used with LUMI Software Stack and they are `cpeGNU/x.y` or `cpeCray/x.y` or `cpeAMD/x.y` where `x.y` stands for specific `LUMI/x.y` release which in turn follows `x.y` release of the Cray Programming Environment.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 235,
+        "question": "What kind of support is there for Julia-based software development? Do I need to install julia and Julia ML libraries like Flux.jl locally?",
+        "answer": "Setting up proper Julia development environment might be quite complex on LUMI. One of the possible ways is to use Spack (which is available as an alternative LUMI Software Stack).",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 236,
+        "question": "Is there any guide to help to quickly find a desired module (e.g. LAMMPS)? It seems that `module av | grep -i lammps` or `module spider LAMMPS` cannot help.",
+        "answer": "There is the Software Library page from which you can at least easily see what modules are available\nWe have very few modules preinstalled but. It is very easy to install them yourself using EasyBuild based on the recipes listed on the above mentioned software library.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 237,
+        "question": "Are you going to install more scientific packages in future, or it's on users to install them via the EasyBuild?",
+        "answer": "You can see from the LUMI software library what is pre-installed or installable with EasyBuild. More EasyBuild recipes are constantly developed by the user support team.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 238,
+        "question": "Do you encourge users to use conda even for installing non-python packages due to (large) storage space they probably take on user home directory (e.g. `~/.conda`)?",
+        "answer": "You can use Conda but not natively as you are used to from your laptop and maybe other clusters. We do not encourage native conda installations (just using `conda create`) as this creates many tens to hundreds of thousands of files and puts quite some pressure on the filesystem. Instead we offer two tools to create a conda environment inside a container. One of them is cotainr",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 239,
+        "question": "I'm not quite sure that using `Singularity` env works well for all cases. For example, what if a user develops code on ondemand/jupyter and wants to use his/her own Singularity-based conda env as a custom kernel?",
+        "answer": "We really encourage users to use software installed properly for the system via EasyBuild or Spack, but that is not always possible because sometimes the dependency chains of especially bioinformatics software are too long. For PyTorch and TensorFlow we advise to try to build on top of containers provided by AMD and discusses in the LUMI Software Library. The size of a software installation in terms of number of gigabytes is not a problem for a computer as LUMI. What is a problem is the number of files, and in particular the number of files that is being read while starting/using the package, and that determines if it is better to put it in a container.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 240,
+        "question": "How does EasyBuild manage versions of our custom software?",
+        "answer": "The ones you have developed yourself are managed the same way as the ones from LUMI software stack, if you just locate your own recipes in a correct place.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 241,
+        "question": "I will need Netcdf-c and netcdf-fortran compiled with the GNU toolchain (my application only works with that, not with other compilers) is that available as modules already or will I have to install them myself with Easybuild?",
+        "answer": "`cray-netcdf` modules (part of the Cray Programming Environment) are recommended to use unless other specific version is required. They combine the C and Fortran interfaces in a single module, not in 3 different modules like some default EasyBuild installations do.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 242,
+        "question": "Should we reserve 8 GPUs per node when submitting a SLURM job, considering that 4 GPUs act like 8?",
+        "answer": "Yes, Slurm thinks of one GCD (Graphics Compute Die) (each MI250X consists of two GCDs) as one GPU. So ask for 8 gpus if you want to book the whole node.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 243,
+        "question": "Is it possible to run and debug a GPU dependent code without submitting it as a batch job, during development and small testing phase.",
+        "answer": "You have to use a slurm job but you can use an interactive job to just get a bash on a LUMI-G node.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 244,
+        "question": "Why use `salloc` instead of just providing all the options to `srun`?",
+        "answer": "`salloc` is a command to create an *allocation*. The `srun` command is meant to create a *job step* in an allocation. It has a side effect though: If it is run outside an allocation it will create an allocation. However, some options for creating an allocation and for a job step have a different meaning for both tasks. And this can lead to unexpected side effects when you use `srun` to create the allocation and start a job step with a single command. `srun` is particularly troublesome if you want an interactive session in which you can then start a distributed memory application.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 245,
+        "question": "If we submit a slurm script with `--partition=standard-g` but without requesting any GPUs, which resources are billed? The CPU or GPU hours ?",
+        "answer": "You will be billed GPU hours, and in the case of `standard-g` you effectively get the whole node, whether you use it or not, so you will be billed 4 GPU hours for every hour you use the node. It is only normal: On LUMI you are billed for resources that others cannot use because of your request, whether you use them or not. Likewise, if you would ask for resources on `small-g` you will be billed based on the amount of cores, amount of GPUs and amount of memory you request. If you request a disproportional amount of one resource, you'll be billed for a similar amount of the other resources. So if you would ask for half of the cores or half of the memory, you'd still be billed for 4 GCDs (so 2 GPU hours per hour use) as you effectively make 4 GCDs unusable for others.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 246,
+        "question": "Can you run a CPU-GPU hybrid code on GPU partition?",
+        "answer": "Sure. You have 56 cores available on each G node. You could also do heterogenous slurm jobs with some part (some MPI ranks) run on C nodes and some on G nodes. But this is a bit more advanced.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 247,
+        "question": "Do we need to have \"module load\" things in the job file?",
+        "answer": "That's a matter of preference if you want to load necessary modules before sending your job script to queue, or in the job script\nI would recommend putting all module loads into the job script to make it more obvious what is happening and more reproducible. We get enough tickets from users claiming that they ran exactly the same job as before and that it used to work but now doesn't work, and often it is because the job was launched from a different environment and does not build the complete environment it needs in the job script.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 248,
+        "question": "How do I run `gpu_check`? I loaded\n```\nmodule load LUMI/23.09\nmodule load lumi-CPEtools\n```\nand allocated resources with `salloc` and when I do `srun gpu_check -l` I get `slurmstepd: error: execve(): gpu_check: No such file or directory`",
+        "answer": "At least you seem to be missing loading the `partition/G` ?",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 249,
+        "question": "Can I get different thread count for different tasks in the same job with one binary ?",
+        "answer": "Heterogeneous jobs can do that. Or you take the largest number that you want for each task and use, e.g., OpenMP functions in your code to limit threads depending on the process, but that may be hard. Is there a good use case for that? A single binary that takes an input argument to behave differently depending on the value of that input argument?",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 250,
+        "question": "What's the difference between `ROCR_VISBLE_DEVICES` and `HIP_VISBLE_DEVICES`?",
+        "answer": "`HIP_VISBLE_DEVICES` seems to only affect device indices exposed to HIP applications while `ROCR_VISBLE_DEVICES` applies to all applications using the user mode ROCm software stack.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 251,
+        "question": "To be safe is it better to not bind to closest and do it explicitly? I'm not sure if, e.g., for PyTorch, there's direct communication between GPUs.",
+        "answer": "It is safer indeed. PyTorch uses RCCL as far as I know so yes, it will do direct communication between GPUs and given that many GPU configurations used for AI have much slower communication via the CPU than direct communication between GPUs (NVIDIA links between GPUs are really fast compared to PCIe, and the external bandwidth between LUMI GPU packages is also 250 GB/s compared to 72 GB/s to the CPU) having good direct communication may be essential for performance.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 252,
+        "question": "If I submit a 256 cores job on 2 nodes without hyperthreading, and if I use the `multi_prog` option of `srun` what should my program configuration file look like ? I want to be sure that my tasks are on both nodes, and I am confused by the numbering (does it change depending on the hyperthreading option?).\n```\n0    ./prog_1.exe\n...\n127 ./prog_2.exe\n128 ./prog_2.exe\n... \n255 ./prog_2.exe\n```\nor\n```\n0    ./prog_1.exe\n...\n127 ./prog_2.exe <--- Sure? Shouldn't it be prog_1? No. Well, the distribution of the programs among the tasks is another question, but for starter I just want to be sure that I use the 2 nodes\n256 ./prog_2.exe\n...\n383 ./prog_2.exe\n```",
+        "answer": "If you want to be sure, I recommend using the tools in the `lumi-CPEtools` module to check how tasks and threads are allocated...",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 253,
+        "question": "When I bind the CPU using hex values, do I always use the same mask? This assumes allocation to a full node? In case I'm not using the full node, should I use bindings?",
+        "answer": "All binding parameters only work with the `--exclusive` flag set (which is done implicitely on standard-g). You can't affect the binding on small-g (except if you set `--exclusive`.\nThe mask uses 7 cores and one GPU per task and 8 tasks, if you want to use less cores or less GPUs you have to adapt it. But if your program uses OpenMP threads on the CPU side, you can still use the \"large\" mask and further restrict with the OpenMP environment variables (`OMP_NUM_THREADS`).",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 254,
+        "question": "Is there a reason why NUMA and GPU numbering are completely independent ? Wouldn't it make more sense, for simpler usability, to have similar numbering, or if the default binding was the optimal one ?",
+        "answer": "CCDs get their numbering from the position in the CPU package. GCDs in a package get their numbering from their position in the GPU packages, and between GPUs I think some order in communication links will determine a numbering when booting the node. Now the problem is really to lay all the connections on the circuit board. I'm sure there would be an ordering so that they number in the same way, but that may not be physically possible or would require a much more expensive circuit board with more layers to make all connections between GCDs and between GCDs and CCDs.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 255,
+        "question": "Probably this depends on the application, but roughly, how much worse is the performance if one does not do the correct CPU --> GPU binding ?",
+        "answer": "I believe most spectacular difference we have seen is almost double. It is probably more important for HIP codes and GPU to GPU communication.\nThe heavier traffic between CPU and GPU, the larger the difference will be...",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 256,
+        "question": "What if I want to modify one of the provided containers to add some application. How should we do it?",
+        "answer": "One possible approach is with singularity overlays",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 257,
+        "question": "Is there anyway to measure the energy/power consumed by the application?",
+        "answer": "No. In theory it should be possible at the node level, but even that is not implemented at the moment. On a shared node it is simply impossible.\nROCm tools can report some numbers but they are known to be unreliable.\nWe simply don't have the software that could be called with user rights to gather the data from the counters in the node and service modules. And even then the data is very coarse and hard to reproduce as on modern computers there is a lot of variability between nodes.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 258,
+        "question": "Is there a way (example, a script) to get the cpu and memory performance of a finished job?",
+        "answer": "There is some very coarse information stored in the Slurm accounting database that you can request via `sacct`. But this is only overal use of memory and overall consumed CPU time.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 259,
+        "question": "When I use `sacct --account=<SLURMJOBID>, it is basically printing the headings but no information related to the job. May I know what I am missing?",
+        "answer": "If you want to give a jobID the option is `-j` or `--jobs` and not `--account`. Moreover, you'll have to specify the output that you want with `-o` or `--format`. There is a long field of possible output fields and some examples in the `sacct` manual page. Often `sacct` only searches in a specific time window for information so depending on the options that you use you may have to specify a start and end time for the search.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 260,
+        "question": "What Block Size do you have on the LUSTRE Filesysten? i want to generate one billion 2 byte files",
+        "answer": "You're simply not allowed to generate one billion 2 byte files and will never get the file quota for that. On the contrary, this will be considered as a denial-of-service attack on the file system and abuse of LUMI with all consequences that come with that. 2 billion 2 byte numbers belong in a single file on an HPC cluster, and you read that file as a whole in memory before using the data. If the reason to use 1B files is that you want to also run 1B small processes that generate those files and that therefore you cannot use a single file: That is also a very, very bad idea, even if you use a subscheduler such as HyperQueue as just starting those 1B small processes may stretch the metadata service a lot. Scaling software is not starting more copies of it, and just starting more copies of a program is not what a supercomputer like LUMI is built for. You need a different and way more expensive type of infrastructure for that. Scaling would be turning that program into a subroutine that you can call in a loop to generate a lot of those 2-byte numbers in a single run and store those intelligently in a single file.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 261,
+        "question": "How can we specify the location such as scracth to store the experiment results (>20GB) generated during the execution? Could you please specify which #SBATCH option to use to redirect them?",
+        "answer": "It is your specific application that determines where the files will land, not Slurm. Maybe they will land in the directory where the application is started (so go to that directory with `cd` will do the job), maybe your application does something different. You cannot redirect arbitrary files in Slurm, you can only redirect the stdout and stderr devices of Linux.\nAbout redirecting stdout and stderr, please see the `sbatch` manual page (e.g. `#SBATCH -o /your/chosen/location/output.%a.out`) but indeed this doesn't actually redirect the output created by the application",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 262,
+        "question": "Let’s assume I have one HDF5 file (~300GB), which stores my entire dataset, consisting of videos (~80k). Besides going for sequential access (e.g., webdataset), is there anything a user can do to limit the I/O bottleneck involving random access (i.e., typical machine learning workflow)?",
+        "answer": "General rule is to use high stripe-count value for such a large dataset files. For instance `-1` will use all OSTs. There are 12 OSTs.",
+        "source": "lumi-1day-20240208"
+    },
+    {
+        "idx": 263,
+        "question": "Can we get energy consumption from `sacct` on LUMI ?",
+        "answer": "No, but you can read them from `/sys/cray/pm_counters/`. You need to read those counters before and after the job (meaning before and after the `srun` command), then do the math and you can have the energy consumption. There are several of them, cpu, gpu and memory. They are only available on compute nodes. Note though that it only makes sense when using whole nodes for the job, and that there are also shared elements in a cluster whose power consumption cannot be measured or assigned to individual jobs, e.g., storage and the interconnect.",
+        "source": "lumi-2day-20240502"
+    },
+    {
+        "idx": 264,
+        "question": "Why do project numbers change every 6 months? This is not convenient",
+        "answer": "It depends on your resource allocator. 6 months is short. But the rules of LUMI are that project have a maximum lifetime of 12 months.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 265,
+        "question": "Why is it impossible to prolong projects or ask for extra resources? It is possible in other CSC servers",
+        "answer": "It was decided to limit project lifetimes to 12 months. It is possible to add extra resources to a project, whether CSC does that or not is their decision (but I'm quite sure they do that if there are good reasons). Of course, CSC can't hand out more allocations than its share of LUMI.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 266,
+        "question": "I don't fully understand the difference between quota and storage billing units, since quota can be handled by LUST, but storage billing units not. Thanks!",
+        "answer": "The idea is that quota is a hard constraint, you cannot go over that. billing units are used to measure continuous usage. so you can \"save\" billing units by deleting unused files. The idea is that you won't get \"max quota * project length\" billing units, it is usually less. And you have to manage it (e.g. you can load data, do simulation, copy back output and delete everything to keep billing units low). Is a compromise to force users to do some cleanup and don't leave useless data on the machine, but at the same time allow large \"bursts\" of data when running the actual simulations.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 267,
+        "question": "Do you suggest to use LUMI-O as a staging place to transfer large files temporarily and then transfer to other LUMI file systems?",
+        "answer": "Yes, that is often a good approach. Either to store large datasets or to transfer data in and out of LUMI.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 268,
+        "question": "When you use 1 GPU for 1 hour, do you consume half GPU core core (due to 2 GPU chip) and plus you also are billed for CPU hours attached to GPU chip or not?",
+        "answer": "No, you are not billed for the CPU usage on the GPU nodes. One GCD (in most instances that shows as one GPU), will be billed as 1/2 GPU hour as there are 2 GCDs on each AMD MI250X GPU card.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 269,
+        "question": "Is there some documentation/guidance somewhere on explicitly using the entirely of the gpu - i.e. both chiplets?",
+        "answer": "The GCDs communicate using MPI or RCCL (but with higher bandwidth than between GPU cards), so usign 2 GCDs is basically the same approach as scaling up to multiple GPUs on one node (or even acroos nodes). It is not possible to use both GCDs as if they are truly one GPU; the bandwidth of the connection is way to slow (total of 200 GB/s per direction compared to 1.6 TB/s peak for the memory of one GCD, and let alone the bandwidth in the caches...)",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 270,
+        "question": "In my `bashrc` I load a lot of module, is there a nice way (beside defining an environment variable) to supres the processing of the `bashrc`?",
+        "answer": "as far as i know, `!#/bin/bash` is not processing the bashrc. to launch a new shell that will process the bashrc you need to use `!#/bin/bash -l` . Note that the new shell that you start, even with `!#/bin/bash`, will inherit the environment from the parent (that is why it seems that you run the bashrc there). My personal suggestion is to keep `bashrc` clean, and have a different bash function to load all the modules or by creating an environment file that you can source after login.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 271,
+        "question": "Why is it possible to submit only 2 dev jobs? And why limit amount of submitted jobs at the first place, can they all just sit in the queue?",
+        "answer": "2 is already a lot. The dev partition is meant for actively debugging and profiling. I can't see how a single user can be actively debugging more than one application at a time. It is really for interactive work and if we allow users to use it as any other partition, it doesn't make sense to have a `dev-g`  partition. If we note abuse for running things which are really autonomous \"production\" runs to bypass queues, it is considerd breaking the conditions of use of LUMI.\nAnd a limit on the number of jobs submitted: There is a limit to the number of jobs that Slurm can handle. Even if they are just in the queue, because Slurm is continuously re-evaluating permissions. Too many jobs in the queue and (a) it becomes for admins impossible to get an overview of the queue and (b) Slurm would slow down a lot. So the more users a system has, the lower the number of jobs that will be allowed per user. Use the right size of system for your work.\nMoreover, Slurm is meant to schedule significant fractions of a cluster. If you need very fine-grained scheduler, you really need to use a \"scheduler-within-the-scheduler\": A subscheduler in your job to manage your small work.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 272,
+        "question": "I have been granted with resources only on standard and standard-g, can I use dev-g for interactive profiling?",
+        "answer": "Yes. You receive CPU hours or GPU hours, and you can spend them on all different partitions (standard, small, dev)",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 273,
+        "question": "If you run lots of jobs, will your next job be \"lower priority\"? (Or did I misunderstand this? :)",
+        "answer": "Ideally, yes. slurm tends to share resources between projects and users. And this is one of the reasons why your job in the queue may be overtaken by one that is more recently submitted.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 274,
+        "question": "How can I find the tasks in LUMI that have been finished/calculated and ran in the past two days/24h? Can you give me some tips and guidance?",
+        "answer": "The `sacct` command is your friend.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 275,
+        "question": "Where can I find more about scheduling policy of SLURM that prioritize the job? Is it covered in the documentation somewhere?",
+        "answer": "No, and it is also not important. It may change without notice to keep the ocupation of the system optimal. Moreover, the conditions of use of LUMI forbid trying to exploit weaknesses in the system for your own advantage, and specifically overengineering jobs for that purpose is one example of this. If you want a job to start quickly, basically be reasonable. Don't ask for more nodes than you need because big jobs tend to increase the waiting time for everybody. Don't ask for more walltime than needed as then your job so that it becomes a better candidate for backfill.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 276,
+        "question": "For my understanding of `salloc` and `srun`; If I run `salloc` I will end up on a node, where I have a potentially access on the full node (if I am on a shared node), for the sake of argument assume the node has 10 cores and I requested 5, so when i run an MPI program with 10 ranks, then it would associate each rank with one core. However, if I would go through `srun` then two ranks would go to one core. Is this correct or do I miss something?",
+        "answer": "No, `salloc` does not run any job. it just creates the allocation. you will still be on the login node after that. You need to combine `salloc` and `srun` to run on the compute node. `salloc` -> create allocation `srun` -> start the mpi job on the created allocation.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 277,
+        "question": "I understood that when I run `salloc` on the login node, then I will be send back to the login node, but not a shell on the compute node. When I then run `srun` on the login node, it would run the command - remotely - on the compute node, where I got my allocation?",
+        "answer": "You are not really sent to compute node with salloc. so technically no going back. salloc command sends a request to scheduler \"hey, i need this resources, please do reserve them\". when the scheduler makes those resources available, the command ends. And you are still in the same place where you executed that command. To login interactively there are different techniques. Note that is possible to go on those allocated node, but via a srun command (e.g. launching a shell script on one of the allocated nodes).",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 278,
+        "question": "How I can debug my batch job if slurm refuses to start it due to some mess in parameters? It just says smth like \"resources cannot be allocated\" but does not explain if I asked for too much memory or too many jobs or what's the problem.",
+        "answer": "Too many jobs is a different error message. And if Slurm complains about the number of resources you asked, there is no other way than to check your script by hand and look into the documentation. For memory there is a rule that is valid on all of LUMI: The amount of physical RAM - 32GB is available to users. Slurm error messages are not very precise, but that is also due to the many different ways in which resources can be requested, and parameters can also conflict with one another.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 279,
+        "question": "Is it possible in lumi to `ssh` to a running node to monitor resources ? like running `htop`?",
+        "answer": "Not with `ssh`, but yes.\nThe reason for not allowing `ssh` is that everything you start this way, is not under the control of the resource manager. Even though there is an extension to Slurm to ensure that you can only log on to nodes on which you have jobs and that will take care of (trying to) kill all processes you start that way when your last job on a node ends, this is still not safe when multiple users are allowed on the node. The work you start in that `ssh` session is not subject to all your resource limits for your jobs, so you can eat into the resources that were meant for another user and cause trouble for that user.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 280,
+        "question": "Can I monitor GPUs load when I run the job? I mean some analog of `nvtop` but for AMD and for 8 GPUs.",
+        "answer": "For simple metrics on your GPU usage you can use rocm-smi. For more information you can use profiling tools like rocprof. You can also use OmniTrace and Omniperf to get even more information on your application performance and GPU usage.\nWhen using `rocm-smi`, check not only that the load is high (close to 100%) but also that the power consumption is around 300W (if only one GCD of a MI250X is used) or around 500W if using both GCDs per GPU. This is important as a GPU can be busy but in reality it just waits for a data or synchronization without actually doing anything.\nAnd there is actually a port of `nvtop` for AMD GPUs and we do have a user-installable EasyConfig for it.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 281,
+        "question": "Allas storage can be called and streamed directly from the code. Does LUMI-O have the same feature? I mean, python code, that actually process these data, without copying them into the project folder.",
+        "answer": "You can acces LUMI-O from the compute nodes, so it is possible to access your objects from your application if that is supported. I think `boto3` would be your friend, but there are certainly other options also.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 282,
+        "question": "When using pytorch on LUMI everything looks as if it has cuda. How is it possible?",
+        "answer": "It is legacy from when CUDA was the only language for that. AMD tried to map everything 1:1 to nvidia, to ease the adoption of his toolchain so python people didn't even bother to change names",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 283,
+        "question": "Do I need to load a corresponding craype for gpus then when I want to compile in login node? Because on login node it is craype-x86-rome, but I want to run my app on GPU nodes that as I understand needs to have craype-x86-milan?",
+        "answer": "This process is called cross-compiling. You can compile on the login nodes for the LUMI-C nodes or for the LUMI-G nodes. For the LUMI-C nodes, all you need to do is `module load craype-x86-milan` and your code will be optimised for zen3. For the GPU nodes it is a little bit more tricky. You need to load `module load craype-x86-trento` (though not doing so wouldn't harm much), but you're likely also need to load the `rocm/6.0.3` module to get access to all the GPU-related stuff. E.g., the HIP compiler for HIP code if you are using the GNU compilers for the CPU part of the code. The Cray compiler can compile HIP code but needs the ROCm module also for tools it uses internally and I bleieve even during compilation for GPU-aware MPI. And with the AMD compilers, you'd be using `PrgEnv-aocc` on the CPU nodes but you can still use `PrgEnv-amd` to compile GPU code on the login nodes.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 284,
+        "question": "As I understand we should always use `cc`, `CC` or `ftn` when we compile and configure them, i.e. modifying the default values of some flags. However, what is if we are using something like `cmake` or something that performs jiting (that uses CMake under the hood)? My solution was always to use `export CC=cc` but is this enough?",
+        "answer": "Either this or the right CMake -DCMAKE_... variables. But the same holds if you would not be using the wrappers as otherwise CMake would most likely be using the ancient system gcc compilers which are GCC 7.5. For a well-behaving installer this should be enough, but sometimes it may depend a bit on the program if CMake is only used under the hood. Python, e.g., may try to enforce the compilers that were used when compiling Python and try to overwrite whatever you specify.\nAnd if you don't use the wrapper, the main difficulty is finding out and specifying paths to libraries. The regular `mpicc` etc. wrappers are provided nowadays in the `cray-mpich` modules and will take care of MPI, but certainly for GNU I would double-check if they use the right compilers and not the system ones.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 285,
+        "question": "What is a tier 0, 1, 2 supercomputer? How do I know what I am working with?",
+        "answer": "Europe has a pyramid model for organising supercomputers. Tier-2 is the smaller supercomputers, often locally available, e.g., at your university. Tier-1 are then larger often national systems, built for larger jobs. Tier-0 are then the very largest computers and so expensive that except for some large countries, they have to be built and operated at an international scale.\nEach size of machine also has its strengths and weaknesses. Obviously you cannot run a very large job on a small machine. But on the other hand, not all properties scale nicely. E.g., the number of files that a filesystem can process per second does not grow well with the size of the cluster. LUMIs filesystems have huge bandwidth, but the number of file metadata operations: Open and close, e.g., may not be that much higher than on a much smaller cluster. So you have to work with large files and parallelism in the access of the data within the file. Which is why it is important to select the right infrastructure for your job.\nAnd LUMI is clearly tier-0. There are also a number of petascale machines in the EuroHPC portfolio (currently Meluxina, Karolina, Vega, Discoverer and Deucalion) which are more Tier-1 level.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 286,
+        "question": "How do I understand one NUMA node or 2 NUMA node with reference to the compute node?",
+        "answer": "A compute node is really the unit that is running its own operating system image. Inside a compute node, all cores, can also access all data.\nBut not every core can access all memory at the same speed. Some memory can be accessed faster than other memory, and that is called Non-Uniform Memory Access or NUMA. A NUMA domain is a group of cores that have equal access to some part of the memory, and the associated memory. The speed different is high depending on whether the memory is on the same socket or a different socket, but within a socket there is also a 20% or so access time difference between memory in the same NUMA node and the other NUMA nodes on that socket.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 287,
+        "question": "Is multithreading is off by default because most of the used apps are limited by memory bandwith? Thank you.",
+        "answer": "It is actually on a the hardware level, but off by default at the level of the scheduler, but only for job steps started with `srun`. Not all programs are memory bandwidth limited. But in fact, hyperthreading helps most for applications that are memory latency limited or have a lot of unpredictable jump instructions. They may also be useful for running a communication thread for each compute thread in the background.\nThere is a very small penalty by turning this on in hardware, but it is negligible, and you are in full control whether you want to use it in your application or not.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 288,
+        "question": "What is the difference between amd and rocm modules?",
+        "answer": "The `rocm` module allows you to use ROCm only with any other environment while `amd` module is to use AMD compilers with the Cray Programming Environment, including proper versions of LibSci and other libraries.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 289,
+        "question": "What is the best way to clean cache after installing a new module?",
+        "answer": "`rm -rf ~/.cache/lmod` and the cache will be rebuilt automatically at the next module command that needs it",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 290,
+        "question": "I am a bit confused about how the \"Cray Compiling Environment\" and the \"Cray Programming Environment\" are related to one another. Furthermore, the different compilers, like amd, GNU and so on. I assume that `PrgEnv-GNU` is essentially kind of a wrapper that loads several module in the right way and tells the \"system\" (whatever that is) to use a certain set of compilers.",
+        "answer": "Cray Programming Environment is the name that is used for the whole software stack that Cray provides for programming. This consists of software they have wholly or partially written themselves, and some software that is really just a repackaging of third party software. Cray Compiling Environment or Cray Compilation Environment (I see both depending on the sources), abbreviated CCE, is the name they use for their C/C++ and Fortran compilers that they provide themselves, with the C/C++ compiler being regular clang/LLVM with some extra plugins, and the Fortran compiler their own on top of LLVM for the actual code generation.\n`PrgEnv-gnu` may look a bit complex if you check the coded, but it only loads some other modules and sets an environment variable that is probably used by the wrappers. The magic is more in the other modules, that set several modules that are picked up by the wrappers. The wrappers themselves are provided by the `craype` module which is one of the modules load by `PrgEnv-gnu`.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 291,
+        "question": "How to check which version is available when I tried `module spider bison`. It gives different version of buildtools? Which one to choose?",
+        "answer": "It is showing the buildtools that are associated to the different available stacks, from 24.03 (the latest one), to 22.08. which version of the buildtools you want to use is related to which stack you are using. In this way you can load the buildtools module compiled with the correct stack when you are using that stack to work.\nThere is basically only one other version available, Bison 3.8.2, as Bison doesn't change quickly anymore. You see that at the top of the output of `module spider Bison`, but it is in a lot of versions of the `buildtools` module. Of course, if you load one of these module combinations, you could then also try `bison --version` if you don't believe that the version we used in the module extension Bison is actually the version of the `bison` program.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 292,
+        "question": "Which version of modules is loaded by default, the latest? Can I just say 'module load systools' instead of 'module load systools/24.03'?",
+        "answer": "After first loading `CrayEnv`, you'll have several `systools` modules but if you would do a `module av` after loading `CrayEnv`, you'd see that the 24.03 version has a `(D)` behind its name. Lmod always tries to take the highest version number and is rather good at figuring out which version this is, even with some rather strange version numbering. In `LUMI/24.03` it ven doesn't matter at the moment as there is only one `systools` module.\nBut loading without a version is dangerous when a new version is installed, or when the default changes. We can also define a different version as the default, and that is something that we often do when a new programming environment is installed on the system. The corresponding `LUMI` module is often still too incomplete so we keep an older one as the default.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 293,
+        "question": "A silly question, but when I do `module show PrgEnv-gnu` then I see the line `load(\"gcc-native\")`. On the other hand when I run `module show gcc-native` I see the line `load(\"PrgEnv-gnu\")`, which looks like an infinite loop, but it works, how is that? I know this is a super specific question, but it just very interesting.",
+        "answer": "To be honest, i don't think is an infinite loop. it just mean that one needs the other so the moment you load one of them, you automatically need to load the other one. is not like when you load the other you unload the first.\nFor me the idea beyond this logic is to prevent using `gcc-native` module with other programming environmnents than `PrgEnv-gnu`; if you really want to do such a mixture load `gcc-native-mixed` module instead. Although actual module script avoids circular loading.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 294,
+        "question": "Which MPI library would you recommend using?",
+        "answer": "the cray-mpich. mpich also is compatible, but does not have access to some optimizations.\nAnd we do have a build recipe for Open MPI 4.1.6, but we cannot fully support that one. Moreover, if you use that one, you cannot use any library that is already on the system that uses MPI. It has proven useful though to get a package called ORCA to work on LUMI. But we recommend using cray-mpich whenever possible.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 295,
+        "question": "Is file size of 15-50 mb ok? in terms of striping.",
+        "answer": "It will probably not kill Lustre unless you try to read or write a lot of those files simultaneously from different nodes, but it is still too smal to come anwhere close to what Lustre can deliver. 1 MB is what Cray tells us as the minimal stripe size, but our experience is that it may have to be a lot larger. But if you mean a stripe size of 15-50 MB and not a file size of 15-50 MB, that would be good values to start with. Ideally, you also have different processes writing to different chunks in the file but that is not always easy to organise....",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 296,
+        "question": "If we have for example a 100GB sqlite database where we need 'random' access (e.g. based on index), would you have any suggestions on first steps to improve performance on Lustre? (Is it even possible/feasible in such a case?)",
+        "answer": "The database is a single file right? if so, i don't think that is an addressable problem, sadly. That pattern just can't use the underlying parallelism. Note that at least that won't hammer MDS (so is not evil, just inefficient)\nAnd the locking may not work well in Lustre, but that only matters for writing to that database.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 297,
+        "question": "Question related to Hybrid MPI/OpenMP: `ntasks-per-node` defines the number of cores or MPI ranks and `cpus-per-task` defines number of threads per task or per rank? You mentioned that there are two threads per core so how come 16 threads per task is possible? May be I am missing something!",
+        "answer": "`ntasks-per-node` does exactly what it says: Tasks per node, so MPI ranks in most cases. It says nothing about cores available to each MPI rank (default is 1). `cpus-per-task`  then says how many cores should be reserved for each task.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 298,
+        "question": "In case of `nodes=1`, `ntasks-per-node = 8` and `cpus-per-task=16` how many cpu hours will be billed if this runs for 1 hour?",
+        "answer": "In this case it is easy because you are filling entire nodes on LUMI-C, so the amount of memory that you consume is not a factor. It will be 128 CPU hours per hour that the job runs.",
+        "source": "lumi-2day-20241210"
+    },
+    {
+        "idx": 299,
+        "question": "In an example, there are 8 tasks per node requested, shouldn't it be 7, because one is reserved for the OS?",
+        "answer": "No, each node contains 8 GCDs. Typically you would run one task per GCD, so 8 in total. I think you may be confused with the number of CPUs that is available per GPU. On a LUMI-G node we have 64 CPU cores and 8 GPUs. So there are 8 CPUs per GPU, however since we operate the nodes in \"low-noise mode\" we reserve 1 CPU core for the OS. As a result you can only request 7 CPUs per GPU.",
+        "source": "lumi-2day-20241210"
+    }
+]
