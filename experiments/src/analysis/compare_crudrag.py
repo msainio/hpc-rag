@@ -4,6 +4,9 @@ import pandas as pd
 
 
 def main():
+    """Compare SDs of experimental results to those of Lyu et al. (2025):
+    https://dl.acm.org/doi/abs/10.1145/3701228
+    """
     crud_rag = {
             "bleu": [
                 19.27, 20.23, 20.73, 21.05, 20.61,
@@ -16,6 +19,10 @@ def main():
                 ],
             }
     crud_rag = pd.DataFrame(crud_rag)
+
+    print("CRUD-RAG")
+    print(crud_rag.std())
+    print()
 
     aug = {
             "bleu": [
@@ -30,6 +37,10 @@ def main():
             }
     aug = pd.DataFrame(aug)
 
+    print("Augmentation")
+    print(aug.std())
+    print()
+
     top_k = {
             "bleu": [
                 2.51, 2.56, 2.67, 2.63,
@@ -43,15 +54,7 @@ def main():
             }
     top_k = pd.DataFrame(top_k)
 
-    print("crud-rag")
-    print(crud_rag.std())
-    print()
-
-    print("aug")
-    print(aug.std())
-    print()
-
-    print("top-k")
+    print("Number of context passages")
     print(top_k.std())
     print()
 

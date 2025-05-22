@@ -8,6 +8,8 @@ import spacy
 
 
 def main():
+    """Plot histograms of dataset text lengths.
+    """
     df = pd.read_json("data/csc-services-qa/csc_services_qa.json")
     df.set_index("idx", inplace=True)
 
@@ -33,53 +35,48 @@ def main():
     g1 = sns.histplot(
             df_csc, x="q_len", binwidth=5, binrange=(0, 160), ax=axs[0, 0],
             )
-    g2 = sns.histplot(
-            df_csc, x="a_len", binwidth=10, binrange=(0, 320), ax=axs[0, 1],
-            )
     g3 = sns.histplot(
-            df_lumi, x="q_len", binwidth=5, binrange=(0, 160), ax=axs[1, 0],
+            df_lumi, x="q_len", binwidth=5, binrange=(0, 160), ax=axs[0, 1],
+            )
+    g2 = sns.histplot(
+            df_csc, x="a_len", binwidth=10, binrange=(0, 320), ax=axs[1, 0],
             )
     g4 = sns.histplot(
             df_lumi, x="a_len", binwidth=10, binrange=(0, 320), ax=axs[1, 1],
             )
 
-    axs[0, 0].axvline(x=df_csc["q_len"].mean(), color="r")
-    axs[0, 1].axvline(x=df_csc["a_len"].mean(), color="r")
-    axs[1, 0].axvline(x=df_lumi["q_len"].mean(), color="r")
-    axs[1, 1].axvline(x=df_lumi["a_len"].mean(), color="r")
-
-    offset = 4
-    height = 23
-
-    axs[0, 0].text(
-            df_csc["q_len"].mean() + offset,
-            height,
-            np.round(df_csc["q_len"].mean(), 2),
+    g1.set(
+            xlabel="Words", xlim=(-10,170), ylim=(0,30),
+            title=(
+                "CSC Question Length "
+                f"(M={np.round(df_csc['q_len'].mean(), 2)})"
+                ),
             )
-    axs[0, 1].text(
-            df_csc["a_len"].mean() + offset * 2.25,
-            height,
-            np.round(df_csc["a_len"].mean(), 2),
+    g3.set(
+            xlabel="Words", ylabel="", xlim=(-10,170), ylim=(0,30),
+            title=(
+                "LUMI Question Length "
+                f"(M={np.round(df_lumi['q_len'].mean(), 2)})"
+                ),
             )
-    axs[1, 0].text(
-            df_lumi["q_len"].mean() + offset,
-            height,
-            np.round(df_lumi["q_len"].mean(), 2),
+    g2.set(
+            xlabel="Words", xlim=(-20,340), ylim=(0,30),
+            title=(
+                "CSC Answer Length "
+                f"(M={np.round(df_csc['a_len'].mean(), 2)})"
+                ),
             )
-    axs[1, 1].text(
-            df_lumi["a_len"].mean() + offset * 2.25,
-            height,
-            np.round(df_lumi["a_len"].mean(), 2),
+    g4.set(
+            xlabel="Words", ylabel="", xlim=(-20,340), ylim=(0,30),
+            title=(
+                "LUMI Answer Length "
+                f"(M={np.round(df_lumi['a_len'].mean(), 2)})"
+                ),
             )
-
-    g1.set(xlabel="tokens", xlim=(-10,170), ylim=(0,30), title="Question length (CSC)")
-    g2.set(xlabel="tokens", xlim=(-20,340), ylim=(0,30), title="Answer length (CSC)")
-    g3.set(xlabel="tokens", xlim=(-10,170), ylim=(0,30), title="Question length (LUMI)")
-    g4.set(xlabel="tokens", xlim=(-20,340), ylim=(0,30), title="Answer length (LUMI)")
 
     g1.set_xticks(range(0, 180, 20))
-    g2.set_xticks(range(0, 340, 40))
     g3.set_xticks(range(0, 180, 20))
+    g2.set_xticks(range(0, 340, 40))
     g4.set_xticks(range(0, 340, 40))
 
     plt.savefig("results/qa_seq_len.png")

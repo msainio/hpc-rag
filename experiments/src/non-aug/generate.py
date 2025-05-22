@@ -13,15 +13,15 @@ from tqdm.asyncio import tqdm_asyncio
 
 
 async def main():
-    # Environment variables
+    # Experiment configuration
 
-    with open("env.json") as file:
+    with open(sys.argv[1]) as file:
         os.environ.update(json.load(file))
     openai.api_key = os.environ["OPENAI_API_KEY"]
 
     # Model and prompt
 
-    llm = OpenAI(model="gpt-4o-mini", temperature=0.0)
+    llm = OpenAI(model=os.environ["LLM_NAME"], temperature=0.0)
 
     prompt = PromptTemplate(
             "Answer the query.\n"
@@ -31,7 +31,7 @@ async def main():
 
     # Load dataset
 
-    dataset = pd.read_json("data/csc-services-qa/csc_services_qa.json")
+    dataset = pd.read_json(os.environ["DATASET"])
 
     # Retrieve
 
@@ -47,8 +47,8 @@ async def main():
 
     # Save results
 
-    output_dir = Path("responses")
-    file_name = f"vanilla.json"
+    output_dir = Path("generations")
+    file_name = "non_aug.json"
     output_file = output_dir / file_name
 
     os.makedirs(output_dir, exist_ok=True)

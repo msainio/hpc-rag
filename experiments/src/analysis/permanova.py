@@ -30,6 +30,8 @@ def read_dir(dirname, keys, question_source="both", include_length=True,
 
 
 def main():
+    """Conduct PERMANOVA tests.
+    """
     dirnames = [
             "grouped-scores/augmentation",
             "grouped-scores/chunk-size",
@@ -41,7 +43,7 @@ def main():
             ]
     metrics = [
             "BLEU", "ROUGE-L", "METEOR", "BERTScore",
-            "BARTScore", "NLI", "SBERT",
+            "BARTScore", "Log. Eq.", "Sem. Sim.",
             ]
 
     for dirname in dirnames:
@@ -64,7 +66,7 @@ def main():
                 )
 
         res = permanova(
-                dm, df["group"].to_numpy(), permutations=99, seed=42
+                dm, df["group"].to_numpy(), permutations=999, seed=42,
                 )
 
         print(dirname)

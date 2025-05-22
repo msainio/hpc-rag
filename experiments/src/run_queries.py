@@ -69,6 +69,10 @@ def get_retriever(vector_index, bm25_dir, top_k=2, top_m=1):
 
     retrievers = []
 
+    # top_m == 0: return top k items retrieved using BM25
+    # top_m == 1: return top k items retrieved using vector search
+    # top_m > 1: retrieve top k items from both indices, fuse and return top m
+
     if top_m == 0:
         bm25_retriever = BM25Retriever.from_persist_dir(bm25_dir)
         bm25_retriever.similarity_top_k = top_k
@@ -170,21 +174,15 @@ def log_token_counts(token_counter):
 
 
 def main():
-    # Basic configuration
+    # Experiment configuration
 
-    k = 16
-    m = 1
-    n = 0
-    rerank_model = "cross-encoder/ms-marco-MiniLM-L-6-v2"
-
-    collection_name = sys.argv[1]
-    config_str = f"_k{k}_m{m}_n{n}_{rerank_model.split('/')[-1]}"
-    run_name = collection_name + config_str
-
-    # Environment variables
-
-    with open("env.json") as file:
+    with open("config.json") as file:
         os.environ.update(json.load(file))
+
+    run_name = (
+            f"csc_{os.environ['CHUNK_SIZE']}_{os.environ['CHUNK_OVERLAP']}_"
+            f"k{k}_m{m}_n{n}_{os.environ['RERANK_MODEL'].split('/')[-1]}"
+            )
 
     # Logger
 
@@ -202,8 +200,8 @@ def main():
     # Token counter and models
 
     token_counter, llm, embed_model = get_token_counter_and_models(
-            llm_name="gpt-4o-mini",
-            embed_model_name="text-embedding-3-small",
+            llm_name=os.environ["LLM_NAME"],
+            embed_model_name=os.environ["EMBED_MODEL_NAME"],
             )
 
     # Vector index
@@ -238,7 +236,7 @@ def main():
 
     # Load dataset
 
-    dataset = pd.read_json("data/csc-services-qa/csc_services_qa.json")
+    dataset = pd.read_json(os.environ["DATASET"])
 
     # Retrieve
 
@@ -252,8 +250,6 @@ def main():
     dataset["source_nodes"] = [
             [
                 {
-                    #"doc_title": node.metadata["doc_title"],
-                    #"doc_url": node.metadata["doc_url"],
                     "file_path": node.metadata["file_path"],
                     "content": node.text,
                     "score": node.score,

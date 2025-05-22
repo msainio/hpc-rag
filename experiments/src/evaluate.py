@@ -123,8 +123,19 @@ def compute_similarity(refs, hyps, docs, model, top_k):
 
 
 def main():
-    input_file = sys.argv[1]
-    df = pd.read_json(input_file)
+    # Experiment configuration
+
+    with open("config.json") as file:
+        os.environ.update(json.load(file))
+
+    run_name = (
+            f"csc_{os.environ['CHUNK_SIZE']}_{os.environ['CHUNK_OVERLAP']}_"
+            f"k{k}_m{m}_n{n}_{os.environ['RERANK_MODEL'].split('/')[-1]}"
+            )
+
+    # Read results file
+
+    df = pd.read_json(f"./generations/{run_name}.json")
 
     # Prepare input texts
 
@@ -258,8 +269,8 @@ def main():
     df["sim_docs_ref"] = sim_docs_ref
     df["sim_docs_hyp"] = sim_docs_hyp
 
-    output_dir = Path("scores")
-    output_file = output_dir / Path(input_file).name
+    output_dir = Path("./scores")
+    output_file = output_dir / f"{run_name}.json"
 
     os.makedirs(output_dir, exist_ok=True)
 

@@ -78,32 +78,6 @@ def clean_markdown(text):
     return "\n".join(new_lines).strip()
 
 
-def get_run_name():
-    tagged_words = brown.tagged_words(
-            categories="learned", tagset="universal")
-
-    adjectives = set()
-    nouns = set()
-    
-    for word, tag in tagged_words:
-        if tag == "ADJ":
-            adjectives.add(word.lower())
-        if tag == "NOUN":
-            nouns.add(word.lower())
-
-    adj = ""
-    noun = ""
-
-    while not (re.fullmatch(r"\w\w+", adj) and re.fullmatch(r"\w\w+", noun)):
-        adj = random.choice(list(adjectives))
-        noun = random.choice(list(nouns))
-    integer = str(random.randint(1, 99))
-
-    run_name = "-".join([adj, noun, integer])
-
-    print(run_name)
-
-
 def get_url(file_path, permalink):
     """Convert local file paths to URLs using a predefined scheme.
     """

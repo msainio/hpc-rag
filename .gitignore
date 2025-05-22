@@ -1,1 +1,10 @@
-__pycache__
+.venv/
+__pycache__/
+data/
+generations/
+grouped-scores/
+logs/
+results/
+scores/
+
+env.json

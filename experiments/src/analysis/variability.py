@@ -52,6 +52,8 @@ def read_dir(dirname, keys, include_length=True, include_retrieval=True):
 
 
 def main():
+    """Compute coefficients of variation for groups of systems.
+    """
     dirnames = [
             ("grouped-scores/augmentation", "Augmentation"),
             ("grouped-scores/chunk-size", "1024"),
@@ -62,12 +64,12 @@ def main():
             ("grouped-scores/number-of-passages", "2"),
             ]
     params = [
-            "Augmentation", "Chunk Size", "Chunk Overlap", "Embedding Model",
-            "Search Type", "Re-ranking", "Number of Passages",
+            "Augmentation", "Chunk size", "Chunk overlap", "Embedding model",
+            "Search type", "Re-ranking", "Number of passages",
             ]
     metrics = [
-            "BLEU", "ROUGE-L", "METEOR", "BERTScore",
-            "BARTScore", "NLI", "SBERT",
+            "BLEU", "ROUGE", "METEOR", "BERTScore",
+            "BARTScore", "LogEq", "SemSim",
             ]
 
     data_all = defaultdict(dict)
@@ -95,27 +97,10 @@ def main():
         df = df_mean.loc[key]
         cvs[params[i]] = df.std() / df.mean()
 
-    df_cv = pd.DataFrame(cvs).T
-    ser_mean = df_cv.apply(lambda x: x.mean(), axis=1).round(2)
-    ser_std = df_cv.apply(lambda x: x.std(), axis=1).round(2)
+    df_cv = pd.DataFrame(cvs).T.round(2)
+    df_cv["Mean"] = df_cv.mean(axis=1)
 
-    #df_cv["Mean"] = ser_mean
-    #df_cv["SD"] = ser_std
-
-    print(df_cv.to_latex())
-
-    sns.set_theme()
-    fig = plt.figure(figsize=(12, 10))
-
-    g = sns.barplot(ser_mean)
-    g.set(
-            title="Mean Relative Variability of Metric Scores",
-            xlabel="Parameter",
-            ylabel="Coefficient of Variation",
-            )
-
-    plt.savefig("results/variability.png")
-    plt.show()
+    print(df_cv.to_latex(float_format="%.2f"))
 
 
 if __name__ == "__main__":

@@ -35,8 +35,10 @@ def read_dir(
 
 
 def main():
+    """Measure and plot Spearman's rank correlation for results.
+    """
     dirnames = [
-            ("grouped-scores/augmentation", "Augmented"),
+            ("grouped-scores/augmentation", "Augmentation"),
             ("grouped-scores/chunk-size", "1024"),
             ("grouped-scores/chunk-overlap", "20"),
             ("grouped-scores/embedding-model", "Small"),
@@ -45,41 +47,31 @@ def main():
             ("grouped-scores/number-of-passages", "2"),
             ]
     metrics = [
-            "BLEU", "ROUGE-L", "METEOR", "BERTScore", "BARTScore",
-            "NLI", "SBERT", "Precision", "Length",
+            "BLEU", "ROUGE", "METEOR", "BERTScore", "BARTScore",
+            "Log. Eq.", "Sem. Sim.", "Cross-Sys. Prop.", "Length Ratio",
             ]
 
     data = []
     for dirname, label in dirnames:
         if "augmentation" in dirname:
-            data += read_dir(
+            df = read_dir(
                     dirname,
                     label,
                     metrics[:-2] + metrics[-1:],
                     include_retrieval=False,
                     )
         else:
-            data += read_dir(dirname, label, metrics)
+            df = read_dir(dirname, label, metrics)
+        data += df
 
     df_all = pd.concat(data)
 
-    sns.set_theme()
-    fig, axs = plt.subplots(1, 2, figsize=(12.5, 7.5))
+    # Reorder columns
 
-    g1 = sns.histplot(
-            df_all["Precision"], binwidth=0.05, binrange=[0, 1], ax=axs[0],
-            )
-    g2 = sns.histplot(
-            df_all["Length"], binwidth=15, binrange=[0, 675], ax=axs[1],
-            )
+    cols = list(df_all.columns)
+    df_all = df_all[cols[:-2] + [cols[-1], cols[-2]]]
 
-    #g1.set_xlabel("")
-    #axs[0].set_title("Precision")
-    #g2.set_xlabel("")
-    #axs[1].set_title("Length")
-
-    plt.savefig("results/histograms.png")
-    plt.show()
+    # Compute p-values
 
     df_ranks = df_all.rank()
     matrix = []
@@ -96,19 +88,9 @@ def main():
     df_star = np.where(df_matrix < 0.01, df_star + "*", df_star + "")
     df_star = np.where(df_matrix < 0.001, df_star + "*", df_star + "")
 
+    # Plot correlation matrix
+
     df_corr = df_all.corr("spearman")
-
-    # Average correlation
-
-    df_tab = df_corr.copy()
-    df_tab = df_tab.map(lambda x: np.nan if x == 1 else x)
-    df_tab = (
-            df_tab.mean().round(2).map(lambda x: f"{x:.2f}")
-            + df_tab.std().round(2).map(lambda x: f"±{x:.2f}")
-            )
-    print(df_tab.to_latex())
-
-    # Correlation matrix
 
     df_annot = df_corr.map(lambda x: f"{np.round(x, 2):.2f}")
     df_annot += df_star
@@ -116,9 +98,7 @@ def main():
     plt.figure(figsize=(12, 10))
     sns.set_theme()
 
-    #annot = True
     annot = df_annot
-    #fmt = ".2g"
     fmt = ""
 
     g = sns.heatmap(
@@ -130,6 +110,20 @@ def main():
 
     plt.savefig("results/spearman.png")
     plt.show()
+
+    # Table average metric correlation coefficients
+
+    df_tab = df_all.drop(
+            labels=["Cross-Sys. Prop.", "Length Ratio"], axis=1,
+            ).corr("spearman")
+    df_tab = df_tab.map(lambda x: np.nan if x == 1 else x)
+    df_tab = (
+            df_tab.mean().round(2).map(lambda x: f"{x:.2f}")
+            + df_tab.std().round(2).map(lambda x: f"±{x:.2f}")
+            )
+
+    print("Mean pairwise correlation of metrics")
+    print(df_tab.to_latex())
 
 
 if __name__ == "__main__":

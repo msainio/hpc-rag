@@ -166,22 +166,19 @@ def log_token_counts(token_counter):
 
 
 def main():
-    # Basic configuration
+    # Experiment configuration
 
-    chunk_size = 1024
-    chunk_overlap = 20
-
-    collection_name = f"csc_{chunk_size}_{chunk_overlap}"
-
-    # Environment variables
-
-    with open("env.json") as file:
+    with open("config.json") as file:
         os.environ.update(json.load(file))
+
+    collection_name = (
+            f"csc_{os.environ['CHUNK_SIZE']}_{os.environ['CHUNK_OVERLAP']}"
+            )
 
     # Logging
 
     log_dir = "logs/index"
-    log_file = f"{log_dir}/{collection_name}.log"
+    log_file = f"{log_dir}/{os.environ['COLLECTION_NAME']}.log"
 
     print("Logging run in:", log_file)
 
@@ -193,17 +190,18 @@ def main():
     # Tokenizer and model
 
     tokenizer, token_counter, embed_model = get_tokenizer_and_model(
-            llm_name="gpt-4o-mini",
-            embed_model_name="text-embedding-3-small",
+            llm_name=os.environ["LLM_NAME"],
+            embed_model_name=os.environ["EMBED_MODEL_NAME"],
             )
 
     # Documents
 
     documents = get_documents(
-            input_dir="data/knowledge-base",
+            input_dir=os.environ["KNOWLEDGE_BASE"],
             tokenizer=tokenizer,
             output_format="original",  # ["original", "html", "plaintext"]
             include_metadata=True,
+            is_experiment=True,
             only_hosted=False,
             show_progress=True,
             )
@@ -211,8 +209,8 @@ def main():
     # Node parser
 
     node_parser = get_node_parser(
-            chunk_size=chunk_size,
-            chunk_overlap=chunk_overlap,
+            chunk_size=os.environ["CHUNK_SIZE"],
+            chunk_overlap=os.environ["CHUNK_OVERLAP"],
             tokenizer=tokenizer,
             )
 
@@ -231,9 +229,10 @@ def main():
             "grpc_port": 6334,
             "prefer_grpc": True,
             }
+
     vector_index = get_vector_index(
             nodes=nodes,
-            collection_name=collection_name,
+            collection_name=os.environ["COLLECTION_NAME"],
             client_kwargs=client_kwargs,
             use_async=True,
             show_progress=True,
@@ -241,7 +240,10 @@ def main():
 
     # BM25 index
 
-    get_bm25_retriever(nodes, persist_dir=f"data/bm25/{collection_name}")
+    get_bm25_retriever(
+            nodes,
+            persist_dir=f"data/bm25/os.environ['COLLECTION_NAME']}",
+            )
 
     # Token counts
 

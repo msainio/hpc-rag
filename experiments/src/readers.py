@@ -101,8 +101,8 @@ class CustomReader(BaseReader):
         return tuples
 
     def get_metadata(
-            self, input_files, documents, md_content, only_hosted,
-            show_progress,
+            self, input_files, documents, is_experiment, md_content,
+            only_hosted, show_progress,
             ):
         iterable = zip(input_files, md_content)
         if show_progress:
@@ -113,11 +113,15 @@ class CustomReader(BaseReader):
 
         metadata = []
         for input_file, md_doc in iterator:
-            _ = self.extract_metadata(input_file, md_doc)  # NOTE
-            metadata.append(
-                    #self.extract_metadata(input_file, md_doc)
-                    {"file_path": str(input_file)}  # NOTE
-                    )
+            if is_experiment:
+                # Although metadata from hosted documents is not used
+                # in the experiments, it is retrieved to give a realistic
+                # picture of the time required for loading the data.
+                _ = self.extract_metadata(input_file, md_doc)
+                metadata.append({"file_path": str(input_file)})
+            else:
+                metadata.append(self.extract_metadata(input_file, md_doc))
+
 
         # Enrich documents with metadata
         enriched_documents = []
@@ -132,7 +136,8 @@ class CustomReader(BaseReader):
     
     def load_data(
             self, input_files, output_format="original",
-            include_metadata=False, only_hosted=False, show_progress=False,
+            include_metadata=False, is_experiment=False, only_hosted=False,
+            show_progress=False,
             ):
         """Load Markdown data.
         """
@@ -159,5 +164,6 @@ class CustomReader(BaseReader):
             return documents
         else:
             return self.get_metadata(
-                    input_files, documents, md_content, only_hosted,
-                    show_progress)
+                    input_files, documents, is_experiment, md_content,
+                    only_hosted, show_progress,
+                    )

@@ -52,6 +52,9 @@ def read_dir(dirname, keys, include_retrieval=True):
 
 
 def main():
+    """Create tables of evaluation results and plot highest performance
+    improvement.
+    """
     dirnames = [
             ("grouped-scores/augmentation", "Augmentation"),
             ("grouped-scores/chunk-size", "1024"),
@@ -63,12 +66,12 @@ def main():
             ]
     metrics = [
             "BLEU", "ROUGE", "METEOR", "BERTScore", "BARTScore",
-            "NLI", "SBERT", "Precision", "Length",
+            "Log. Eq.", "Sem. Sim.", "Cross-Sys. Prop.", "Length Ratio",
             ]
     groups = [
             "Augmentation",
-            "Chunk Size", "Chunk Overlap", "Embedding Model",
-            "Search Type", "Re-ranking", "Number of Passages",
+            "Chunk size", "Chunk overlap", "Embedding model",
+            "Search type", "Re-ranking", "Number of passages",
             ]
 
     data_all = defaultdict(dict)
@@ -77,8 +80,11 @@ def main():
             data = read_dir(dirname, metrics[:-2] + metrics[-1:], False)
         else:
             data = read_dir(dirname, metrics, True)
+        if not "chunk-size" in dirname:
             del data[baseline]
         data_all[groups[i]] = data
+
+    # Dataframes for mean and SD
 
     df_mean = pd.concat(
             {
@@ -97,13 +103,15 @@ def main():
                 }
             ).round(2)
 
-    ser_len = df_mean["Length"]
-    df_mean = df_mean.drop(columns=["Length"])
-    df_mean["Length"] = ser_len
+    # Reorder columns
 
-    # Min-max scaling
+    cols = list(df_mean.columns)
+    df_mean = df_mean[cols[:-2] + [cols[-1], cols[-2]]]
+    df_std = df_std[cols[:-2] + [cols[-1], cols[-2]]]
 
-    df_scaled = df_mean.drop(columns=["Precision", "Length"])
+    # Aggregate scores and rank systems
+
+    df_scaled = df_mean.drop(columns=["Cross-Sys. Prop.", "Length Ratio"])
 
     scaler = StandardScaler()
     df_scaled[df_scaled.columns] = scaler.fit_transform(df_scaled)
@@ -119,18 +127,14 @@ def main():
             ": ".join([x, y]).capitalize() for x, y in df_scaled.index
             ]
 
-    print(df_scaled)
-    print()
-
     df_scaled["M"] = df_scaled["M"].round(2).map(
-            #lambda x: f"{x:.2f}"[1:] if x < 1 else f"{x:.2f}"
             lambda x: f"{x:.2f}"
             )
     df_scaled["SD"] = df_scaled["SD"].round(2).map(
-            #lambda x: f"{x:.2f}"[1:] if x < 1 else f"{x:.2f}"
             lambda x: f"{x:.2f}"
             )
     
+    print("System ranking based on overall performance")
     print(
             (
                 df_scaled["M"]
@@ -139,7 +143,7 @@ def main():
             )
     print()
 
-    # Plot
+    # Plot relative improvement
 
     fig = plt.figure(figsize=(10, 7.5))
     sns.set_theme()
@@ -148,44 +152,55 @@ def main():
 
     df_plot = df_mean.droplevel(0).loc[
             [
-                "Augmentation",
+                "1024",
                 "16",
                 ]
             ]
 
     df_plot = (df_plot - ser_noaug) / ser_noaug
 
-    df_plot = df_plot.drop(columns=["Precision", "Length"])
+    df_plot = df_plot.drop(columns=["Cross-Sys. Prop.", "Length Ratio"])
     df_plot.index = [
             "Baseline",
-            "Best",
+            "Best-Performing",
             ]
-
-    print(
-            df_plot.loc["Best"] - df_plot.loc["Baseline"]
-            > df_plot.loc["Baseline"]
-            )
-    print()
 
     df_plot[""] = df_plot.index
     df_plot = df_plot.melt(id_vars=[""])
 
     g = sns.barplot(df_plot, x="variable", y="value", hue="")
 
-    g.set(xlabel="Metric", ylabel="Percent change")
+    g.set(xlabel="Metric", ylabel="Percent Change")
 
     plt.savefig("results/performance.png")
     plt.show()
 
-    # Results table
+    # Create results table
 
-    df_mean = df_mean.round(2)
-    df_mean = df_mean.map(lambda x: f"{x:.2f}")
-    df_mean += df_std.map(lambda x: f"±{x:.2f}" if isinstance(x, float) else x)
+    df_tab = df_mean.round(2)
+    df_tab = df_mean.map(lambda x: f"{x:.2f}")
+    df_tab += df_std.map(lambda x: f"±{x:.2f}" if isinstance(x, float) else x)
 
-    df_mean = df_mean.droplevel(0)
+    df_tab = df_tab.droplevel(0)
 
-    print(df_mean.to_latex())
+    print("Results table")
+    print(df_tab.to_latex())
+    print()
+    
+    # Print results for cross-system proportion and length ratio
+
+    print("Means and SDs for cross-sys. prop. and length ratio")
+    print(df_mean["Cross-Sys. Prop."].describe())
+    print(
+            df_mean.droplevel(0).drop(
+                labels=["No Augmentation"], axis=0,
+                )["Length Ratio"].describe()
+            )
+    print()
+
+    print("Non-augmented length ratio")
+    print(ser_noaug['Length Ratio'])
+    print()
 
 
 if __name__ == "__main__":

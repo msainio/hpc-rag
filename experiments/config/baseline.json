@@ -1,0 +1,13 @@
+{
+    "KNOWLEDGE_BASE": "data/knowledge-base",
+    "DATASET": "data/csc-services-qa/csc_services_qa.json",
+    "CHUNK_SIZE": 1024,
+    "CHUNK_OVERLAP": 20,
+    "OPENAI_API_KEY": "sk-abcdefghijklmnop123",
+    "EMBED_MODEL_NAME": "text-embedding-3-small",
+    "LLM_NAME": "gpt-4o-mini",
+    "TOP_K": 16,
+    "TOP_M": 1,
+    "TOP_N": 0,
+    "RERANK_MODEL": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+}

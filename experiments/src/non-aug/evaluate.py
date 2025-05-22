@@ -72,8 +72,7 @@ def compute_similarity(refs, hyps, model):
 
 
 def main():
-    input_file = sys.argv[1]
-    df = pd.read_json(input_file)
+    df = pd.read_json("./generations/non_aug.json")
 
     # Prepare input texts
 
