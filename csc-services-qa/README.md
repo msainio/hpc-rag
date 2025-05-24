@@ -1,5 +1,21 @@
 # CSC Services Question Answering Dataset
 
+This directory contains code for building a question answering dataset about
+CSC and LUMI computing services.
+
+## How to build dataset
+
+1. Get the raw data files by running `./scripts/get-lumi-data.sh` and
+   `./src/get_csc_data.py`. For retrieving the CSC Apr 2023 and Nov 2023
+   Markdown documents, use the download links on their HackMD pages. The links
+   to the pages are provided below. Save the files under
+   `./data/raw/csc-enveff-20230412/` and `./data/raw/csc-enveff-20231128/`.
+2. Extract QA pairs by running `./src/extract_pairs.py`.
+3. Create a copy of `./data/processed/uncurated.json` named
+   `./data/processed/curated.json` and curate the data.
+4. Run `./src/postprocess_pairs.py` to postprocess the QA pairs. The final
+   dataset is saved as `./csc-services-qa/csc_services_qa.json`.
+
 ## Data Sources
 
 ### CSC Computing Environment trainings

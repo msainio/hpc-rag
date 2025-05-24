@@ -7,6 +7,8 @@ import requests
 
 
 def main():
+    # Get the April 2023 and November 2023 Markdown documents
+    # using the download link on HackMD
     urls = [
             ("https://hackmd.io/@CSCBioMaria/ByS0nTrTh",
                 "csc-enveff-20230919"),
