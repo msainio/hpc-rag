@@ -24,7 +24,5 @@ The thesis document is provided as `./Sainio_Mitja_Mastersthesis_2025.pdf`.
 
 ## Licensing
 
-This project is licensed under the MIT License.
-
-The project includes [BARTScore](https://github.com/neulab/BARTScore) as a submodule,
+This project is licensed under the MIT License. It includes [BARTScore](https://github.com/neulab/BARTScore),
 which is licensed under the Apache License 2.0.
