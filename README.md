@@ -1,4 +1,4 @@
-# Retrieval-Augmented Generation for High-Performance Computing Question Answering
+# Towards Optimizing the Retrieval Quality of a Retrieval-Augmented Chatbot for HPC User Support
 
 This repository contains code and data for the master's thesis "Towards
 Optimizing the Retrieval Quality of a Retrieval-Augmented Chatbot for HPC User
