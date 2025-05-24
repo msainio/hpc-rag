@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from bart_score import BARTScorer
+from BARTScore.bart_score import BARTScorer
 from bert_score import BERTScorer
 from datetime import datetime
 from itertools import chain

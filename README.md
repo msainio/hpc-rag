@@ -19,3 +19,9 @@ evaluating them on the QA dataset, and analyzing the results.
 ## Thesis
 
 The thesis document is provided as `./Sainio_Mitja_Mastersthesis_2025.pdf`.
+
+## Copyright
+
+While licensed under the MIT License, this project includes
+[BARTScore](https://github.com/neulab/BARTScore) as a submodule,
+which is licensed under the Apache License 2.0.

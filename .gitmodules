@@ -1,0 +1,3 @@
+[submodule "experiments/src/BARTScore"]
+	path = experiments/src/BARTScore
+	url = https://github.com/neulab/BARTScore.git
