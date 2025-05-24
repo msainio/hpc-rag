@@ -3,7 +3,7 @@
 This directory contains code for running the experiments detailed in the
 thesis.
 
-## Replication
+## How to replicate
 
 The `./config/baseline.json` file contains the configuration for
 running the experiment pipeline for the baseline system. In order to build and
