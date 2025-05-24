@@ -1,9 +1,9 @@
-# CSC Services Question Answering Dataset
+# CSC services question answering dataset
 
 This directory contains code for building a question answering dataset about
 CSC and LUMI computing services.
 
-## How to build dataset
+## How to build
 
 1. Get the raw data files by running `./scripts/get-lumi-data.sh` and
    `./src/get_csc_data.py`. For retrieving the CSC Apr 2023 and Nov 2023
@@ -16,7 +16,7 @@ CSC and LUMI computing services.
 4. Run `./src/postprocess_pairs.py` to postprocess the QA pairs. The final
    dataset is saved as `./csc-services-qa/csc_services_qa.json`.
 
-## Data Sources
+## Data sources
 
 ### CSC Computing Environment trainings
 
