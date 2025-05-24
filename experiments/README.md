@@ -24,6 +24,6 @@ evaluate this system, follow these steps:
 
 The code used for producing the tables and figures in the thesis are provided
 in `./src/analysis/`, though these rely on having the score files stored under
-`./grouped-scores/` using a specific naming scheme. Regardless, the figures
+`./grouped-scores/` using a specific naming scheme. Regardless, the plots
 (but not the tables) produced using these these scripts are provided in
 `./results/`.
